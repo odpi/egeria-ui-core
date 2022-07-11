@@ -36,12 +36,23 @@ export class EgeriaLogin extends React.Component {
                 });
             });
         };
+        this.handleKeyPress = (e) => {
+            if (e.key === 'Enter') {
+                this.handleSubmit();
+            }
+        };
         this.state = {
             errors: [],
             isLoading: false,
             password: '',
             username: ''
         };
+    }
+    componentDidMount() {
+        document.addEventListener("keypress", this.handleKeyPress);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("keypress", this.handleKeyPress);
     }
     render() {
         const { errors, username, password } = this.state;
