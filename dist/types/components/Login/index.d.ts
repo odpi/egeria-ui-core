@@ -10,6 +10,9 @@ interface State {
 export declare class EgeriaLogin extends React.Component<Props, State> {
     constructor(props: Props);
     handleSubmit: () => void;
+    handleKeyPress: (e: any) => void;
+    componentDidMount(): void;
+    componentWillUnmount(): void;
     render(): JSX.Element;
 }
 export {};
