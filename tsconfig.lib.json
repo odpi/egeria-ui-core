@@ -16,7 +16,7 @@
     "isolatedModules": true
   },
   "files": [
-    "src/index.ts"
+    "src/entry.ts"
   ],
   "exclude": [
     "node_modules",
