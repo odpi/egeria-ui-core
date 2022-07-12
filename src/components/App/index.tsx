@@ -14,7 +14,7 @@ export function App() {
       <EgeriaLogin loginCallback={() => {
                      window.location.href = `http://localhost:3001/`;
                    }}
-                   apiUrl={`http://localhost:9000`} />
+                   apiUrl={`http://localhost:9000/api/auth/login`} />
     </div>
   </>;
 }
