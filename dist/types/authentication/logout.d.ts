@@ -1,1 +1,1 @@
-export declare function logout(): void;
+export declare function logout(logoutCallback?: Function): void;
