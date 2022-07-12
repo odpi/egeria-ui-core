@@ -3,5 +3,7 @@ export const logout = (logoutCallback?: Function) => {
 
   console.log('LOGGED OUT');
 
-  logoutCallback ? logoutCallback() : 0;
+  if (logoutCallback) {
+    logoutCallback();
+  };
 }

@@ -1,8 +1,11 @@
+import { logout } from '../../authentication';
 import { EgeriaLogin } from '../Login';
 
 import './index.scss';
 
 export function App() {
+
+  console.log(logout);
   return <>
     <div>
       <h1>Egeria UI Core</h1>
