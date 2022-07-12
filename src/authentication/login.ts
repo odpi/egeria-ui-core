@@ -1,12 +1,12 @@
 import { setToken } from './set-token';
 
-export function login(username: string, password: string) {
+export function login(username: string, password: string, apiUrl: string) {
   const requestOptions = {
     method: 'POST',
     body: new URLSearchParams(`username=${username}&password=${password}`)
   };
 
-  return fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, requestOptions)
+  return fetch(`${apiUrl}/api/auth/login`, requestOptions)
     .then((response) => {
       if(response.ok) {
         const token = response.headers.get('x-auth-token');

@@ -4,10 +4,8 @@ import {
   authHeader,
   authHeaderWithContentType,
   currentJwt,
-  login,
   logout,
   parseJwt,
-  setToken
 } from './authentication';
 
 import {
@@ -23,10 +21,8 @@ export {
   authHeader,
   authHeaderWithContentType,
   currentJwt,
-  login,
   logout,
   parseJwt,
-  setToken,
 
   // commons
   egeriaFetch,

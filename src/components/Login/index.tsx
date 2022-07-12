@@ -14,7 +14,10 @@ import { AlertCircle } from 'tabler-icons-react';
 
 import { login } from '../../authentication/login';
 
-interface Props {}
+interface Props {
+  loginCallback: Function;
+  apiUrl: string;
+}
 interface State {
   errors: Array<string>
   isLoading: Boolean
@@ -36,11 +39,12 @@ export class EgeriaLogin extends React.Component<Props, State> {
 
   handleSubmit = () => {
     const { username, password } = this.state;
+    const { apiUrl } = this.props;
 
     this.setState({
       isLoading: true
     }, () => {
-      login(username, password).then((response: any) => {
+      login(username, password, apiUrl).then((response: any) => {
         let errors = [];
 
         if (!response.ok) {
@@ -55,12 +59,15 @@ export class EgeriaLogin extends React.Component<Props, State> {
               errors.push('Ops! Cannot authenticate right now.');
               break;
           }
+
           this.setState({
             errors,
             isLoading: false
           });
         } else {
-          window.location.href = `${process.env.REACT_APP_HOMEPAGE}`;
+          const { loginCallback } = this.props;
+
+          loginCallback();
         }
       });
     });
