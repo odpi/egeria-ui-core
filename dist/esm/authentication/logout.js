@@ -4,5 +4,4 @@ export const logout = (logoutCallback) => {
     if (logoutCallback) {
         logoutCallback();
     }
-    ;
 };
