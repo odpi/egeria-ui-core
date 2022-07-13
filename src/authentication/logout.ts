@@ -5,5 +5,5 @@ export const logout = (logoutCallback?: Function) => {
 
   if (logoutCallback) {
     logoutCallback();
-  };
+  }
 }
