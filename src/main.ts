@@ -1,4 +1,7 @@
-import { EgeriaLogin } from './components';
+import {
+  EgeriaLogin,
+  RequireAuth
+} from './components';
 
 import {
   authHeader,
@@ -16,6 +19,7 @@ import {
 export {
   // components
   EgeriaLogin,
+  RequireAuth,
 
   // authentication
   authHeader,
