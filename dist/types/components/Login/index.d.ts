@@ -1,5 +1,7 @@
 import React from 'react';
 interface Props {
+    loginCallback: Function;
+    apiUrl: string;
 }
 interface State {
     errors: Array<string>;

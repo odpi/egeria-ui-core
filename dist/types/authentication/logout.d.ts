@@ -1,1 +1,1 @@
-export declare function logout(): void;
+export declare const logout: (logoutCallback?: Function) => void;

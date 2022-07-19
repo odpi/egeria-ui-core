@@ -1,13 +1,14 @@
-import { EgeriaLogin } from './components';
+import {
+  EgeriaLogin,
+  RequireAuth
+} from './components';
 
 import {
   authHeader,
   authHeaderWithContentType,
   currentJwt,
-  login,
   logout,
   parseJwt,
-  setToken
 } from './authentication';
 
 import {
@@ -18,15 +19,14 @@ import {
 export {
   // components
   EgeriaLogin,
+  RequireAuth,
 
   // authentication
   authHeader,
   authHeaderWithContentType,
   currentJwt,
-  login,
   logout,
   parseJwt,
-  setToken,
 
   // commons
   egeriaFetch,

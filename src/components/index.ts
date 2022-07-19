@@ -2,6 +2,11 @@ import {
   EgeriaLogin
 } from './Login';
 
+import {
+  RequireAuth
+} from './RequireAuth';
+
 export {
-  EgeriaLogin
+  EgeriaLogin,
+  RequireAuth
 }

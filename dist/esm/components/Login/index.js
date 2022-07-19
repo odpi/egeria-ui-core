@@ -8,10 +8,11 @@ export class EgeriaLogin extends React.Component {
         super(props);
         this.handleSubmit = () => {
             const { username, password } = this.state;
+            const { apiUrl } = this.props;
             this.setState({
                 isLoading: true
             }, () => {
-                login(username, password).then((response) => {
+                login(username, password, apiUrl).then((response) => {
                     let errors = [];
                     if (!response.ok) {
                         switch (response.status) {
@@ -31,7 +32,8 @@ export class EgeriaLogin extends React.Component {
                         });
                     }
                     else {
-                        window.location.href = `${process.env.REACT_APP_HOMEPAGE}`;
+                        const { loginCallback } = this.props;
+                        loginCallback();
                     }
                 });
             });
