@@ -12,7 +12,7 @@
     "@capaj/pluralize": "^1.0.4",
     "@mantine/core": "^4.2.9",
     "@mantine/hooks": "^4.2.9",
-    "@mantine/next": "^4.2.9",
+    "@mantine/next": "^5.0.0",
     "d3": "^7.4.4",
     "egeria-js-commons": "github:odpi/egeria-js-commons#react",
     "egeria-ui-components": "github:odpi/egeria-ui-components#main",
