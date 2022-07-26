@@ -1,34 +1,15 @@
 import {
   EgeriaLogin,
-  RequireAuth
+  RequireAuth,
+  EgeriaHome,
+  links,
+  EgeriaApp
 } from './components';
 
-import {
-  authHeader,
-  authHeaderWithContentType,
-  currentJwt,
-  logout,
-  parseJwt,
-} from './authentication';
-
-import {
-  egeriaFetch,
-  handleResponse
-} from './commons';
-
 export {
-  // components
+  EgeriaApp,
+  EgeriaHome,
+  links,
   EgeriaLogin,
-  RequireAuth,
-
-  // authentication
-  authHeader,
-  authHeaderWithContentType,
-  currentJwt,
-  logout,
-  parseJwt,
-
-  // commons
-  egeriaFetch,
-  handleResponse
+  RequireAuth
 }
