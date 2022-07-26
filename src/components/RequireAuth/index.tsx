@@ -2,7 +2,7 @@ import {
   Navigate
 } from 'react-router-dom';
 
-import { currentJwt } from '../../authentication/current-jwt';
+import { currentJwt } from 'egeria-js-commons';
 
 export function RequireAuth(props: any) {
   const { children } = props;

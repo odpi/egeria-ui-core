@@ -1,23 +1,63 @@
-import { logout } from '../../authentication';
-import { EgeriaLogin } from '../Login';
+import {
+  AppShell,
+  useMantineTheme
+} from '@mantine/core';
 
-import './index.scss';
+import {
+  // NavLink,
+  Route,
+  Routes
+} from 'react-router-dom';
 
-export function App() {
+import {
+  EgeriaGlossary,
+  EgeriaLineage
+} from 'egeria-ui-components';
 
-  console.log(logout);
+import { EgeriaHeader } from '../Header';
+import { EgeriaNavbar } from '../NavbarMinimal';
+import { EgeriaAbout } from '../About';
+import { RequireAuth } from '../RequireAuth';
+
+export function EgeriaApp() {
+  const theme = useMantineTheme();
+
   return <>
-    <div>
-      <h1>Egeria UI Core</h1>
-    </div>
+    <AppShell
+      styles={{
+        main: {
+          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]
+        }
+      }}
+      navbarOffsetBreakpoint="sm"
+      asideOffsetBreakpoint="sm"
+      fixed
+      navbar={<EgeriaNavbar />}
+      header={<EgeriaHeader />}
+    >
+      <div style={{width:'100%', height:'100%'}}>
+        <Routes>
+          <Route path="/hi" element={<>Hi</>} />
 
-    <div>
-      <h1>Login</h1>
+          <Route path={"/about"} element={<EgeriaAbout />} />
 
-      <EgeriaLogin loginCallback={() => {
-                     window.location.href = `http://localhost:3001/`;
-                   }}
-                   apiUrl={`http://localhost:9000/api/auth/login`} />
-    </div>
+          {/* <Route path={"/assets/:uuid/details"}
+                  element={<RequireAuth><AssetDetails match={""} /></RequireAuth>} /> */}
+
+
+          <Route path={"/glossary"}
+                 element={<RequireAuth><EgeriaGlossary /></RequireAuth>} />
+
+          {/* <Route path={"/assets/catalog"}
+                  element={<RequireAuth><AssetCatalog location={""}/></RequireAuth>} /> */}
+
+          <Route path={"/lineage"}
+                  element={<RequireAuth><EgeriaLineage lineage={'ultimate-source'} /></RequireAuth>} />
+
+          {/* <Route path={"/lineage/viewer"}
+                  element={<RequireAuth><LineageViewer /></RequireAuth>} /> */}
+        </Routes>
+      </div>
+    </AppShell>
   </>;
 }

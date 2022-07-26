@@ -12,7 +12,7 @@ import {
 
 import { AlertCircle } from 'tabler-icons-react';
 
-import { login } from '../../authentication/login';
+import { login } from 'egeria-js-commons';
 
 interface Props {
   loginCallback: Function;
