@@ -5,7 +5,7 @@ import { FeaturesGrid } from '../Features';
 import { NavLink } from 'react-router-dom';
 import { types } from 'egeria-js-commons';
 import { useEffect, useState } from 'react';
-import { currentJwt, logout } from 'egeria-ui-core';
+import { currentJwt, logout } from 'egeria-js-commons';
 import { goHome } from 'egeria-js-commons';
 const useStyles = createStyles((theme) => ({
     inner: {
