@@ -1,2 +1,2 @@
-import { EgeriaLogin, RequireAuth, EgeriaHome, links, EgeriaApp } from './components';
-export { EgeriaApp, EgeriaHome, links, EgeriaLogin, RequireAuth };
+import { EgeriaAbout, EgeriaApp, EgeriaHome, EgeriaLogin, RequireAuth, links } from './components';
+export { EgeriaAbout, EgeriaApp, EgeriaHome, EgeriaLogin, RequireAuth, links };

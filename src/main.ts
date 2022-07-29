@@ -1,15 +1,17 @@
 import {
+  EgeriaAbout,
+  EgeriaApp,
+  EgeriaHome,
   EgeriaLogin,
   RequireAuth,
-  EgeriaHome,
-  links,
-  EgeriaApp
+  links
 } from './components';
 
 export {
+  EgeriaAbout,
   EgeriaApp,
   EgeriaHome,
-  links,
   EgeriaLogin,
-  RequireAuth
+  RequireAuth,
+  links
 }
