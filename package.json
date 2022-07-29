@@ -8,7 +8,7 @@
   "main": "./dist/esm/main.js",
   "module": "./dist/esm/main.js",
   "types": "./dist/types/main.d.ts",
-  "dependencies": {
+  "peerDependencies": {
     "@mantine/core": "4.2.9",
     "@mantine/hooks": "4.2.9",
     "@mantine/next": "4.2.9",
