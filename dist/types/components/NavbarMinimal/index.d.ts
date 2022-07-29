@@ -1,2 +1,6 @@
 /// <reference types="react" />
-export declare function EgeriaNavbar(): JSX.Element;
+interface Props {
+    menu: any;
+}
+export declare function EgeriaNavbar(props: Props): JSX.Element;
+export {};

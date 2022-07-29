@@ -1,27 +1,27 @@
-import { logout } from 'egeria-ui-core';
+// import { logout } from 'egeria-ui-core';
 
-describe('<Home />', () => {
-  it(`should simply pass`, () => {
-    jest.spyOn(console, "log");
+// describe('<Home />', () => {
+//   it(`should simply pass`, () => {
+//     jest.spyOn(console, "log");
 
-    logout();
+//     logout();
 
-    expect(console.log).toHaveBeenCalledTimes(1);
-  });
+//     expect(console.log).toHaveBeenCalledTimes(1);
+//   });
 
-  it(`should really pass`, () => {
-    const callbackFunction = {
-      do: () => { console.log('callbackFunction'); }
-    };
+//   it(`should really pass`, () => {
+//     const callbackFunction = {
+//       do: () => { console.log('callbackFunction'); }
+//     };
 
-    jest.spyOn(callbackFunction, "do");
-    jest.spyOn(console, "log");
+//     jest.spyOn(callbackFunction, "do");
+//     jest.spyOn(console, "log");
 
-    callbackFunction.do;
+//     callbackFunction.do;
 
-    logout(callbackFunction.do);
+//     logout(callbackFunction.do);
 
-    expect(callbackFunction.do).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledTimes(2);
-  });
-});
+//     expect(callbackFunction.do).toHaveBeenCalledTimes(1);
+//     expect(console.log).toHaveBeenCalledTimes(2);
+//   });
+// });

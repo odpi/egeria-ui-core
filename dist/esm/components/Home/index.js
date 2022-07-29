@@ -5,8 +5,7 @@ import { FeaturesGrid } from '../Features';
 import { NavLink } from 'react-router-dom';
 import { types } from 'egeria-js-commons';
 import { useEffect, useState } from 'react';
-import { currentJwt, logout } from 'egeria-js-commons';
-import { goHome } from 'egeria-js-commons';
+import { currentJwt, logout, goHome } from 'egeria-js-commons';
 const useStyles = createStyles((theme) => ({
     inner: {
         display: 'flex',
@@ -78,7 +77,7 @@ export function EgeriaHome({ links }) {
     const isLoggedIn = currentJwt();
     const [typesData, setTypesData] = useState([]);
     useEffect(() => {
-        types.getAll().then(response => response.json()).then(data => {
+        types.getAll().then((response) => response.json()).then((data) => {
             setTypesData(data.map((d) => {
                 return {
                     value: d.name,
