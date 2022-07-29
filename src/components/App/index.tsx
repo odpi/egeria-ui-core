@@ -8,10 +8,12 @@ import { EgeriaNavbar } from '../NavbarMinimal';
 
 interface Props {
   main?: React.ReactNode;
+  menu?: Array<Object>;
 }
 
 export function EgeriaApp(props: React.PropsWithChildren<Props>) {
   const theme = useMantineTheme();
+  const { menu } = props;
 
   return <>
     <AppShell
@@ -23,7 +25,7 @@ export function EgeriaApp(props: React.PropsWithChildren<Props>) {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       fixed
-      navbar={<EgeriaNavbar />}
+      navbar={<EgeriaNavbar menu={menu ? menu : []} />}
       header={<EgeriaHeader />}
     >
       <div style={{width:'100%', height:'100%'}}>

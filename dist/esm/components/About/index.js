@@ -24,7 +24,8 @@ class EgeriaAbout extends React.Component {
         };
     }
     componentDidMount() {
-        fetch(`/about.json`)
+        const { apiUrl } = this.props;
+        fetch(`${apiUrl}/about.json`)
             .then(data => {
             return data.json();
         })

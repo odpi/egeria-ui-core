@@ -3,6 +3,7 @@ import { Accordion, LoadingOverlay, Paper, Text } from '@mantine/core';
 import { capitalize } from "egeria-js-commons";
 
 interface Props {
+  apiUrl: string;
 }
 
 interface State {
@@ -39,7 +40,9 @@ class EgeriaAbout extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    fetch(`/about.json`)
+    const { apiUrl } = this.props;
+
+    fetch(`${ apiUrl }/about.json`)
       .then(data => {
         return data.json()
       })
