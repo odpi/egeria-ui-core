@@ -1,2 +1,6 @@
 /// <reference types="react" />
-export declare function EgeriaApp(): JSX.Element;
+interface Props {
+    main?: React.ReactNode;
+}
+export declare function EgeriaApp(props: React.PropsWithChildren<Props>): JSX.Element;
+export {};
