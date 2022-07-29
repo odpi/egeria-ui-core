@@ -1,5 +1,6 @@
 import React from "react";
 interface Props {
+    apiUrl: string;
 }
 interface State {
     data: {
