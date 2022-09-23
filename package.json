@@ -1,6 +1,6 @@
 {
   "name": "egeria-ui-core",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "private": true,
   "files": [
     "dist"
@@ -8,13 +8,11 @@
   "main": "./dist/esm/main.js",
   "module": "./dist/esm/main.js",
   "types": "./dist/types/main.d.ts",
-  "dependencies": {
-    "egeria-js-commons": "github:odpi/egeria-js-commons#react"
-  },
   "peerDependencies": {
     "@mantine/core": "4.2.9",
     "@mantine/hooks": "4.2.9",
     "@mantine/next": "4.2.9",
+    "egeria-js-commons": "github:odpi/egeria-js-commons#4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
