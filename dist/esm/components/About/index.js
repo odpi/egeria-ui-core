@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import React from "react";
 import { Accordion, LoadingOverlay, Paper, Text } from '@mantine/core';
-import { capitalize } from "egeria-js-commons";
+import { capitalize } from "@lfai/egeria-js-commons";
 /**
  *
  * React component used for displaying details about the application instance.

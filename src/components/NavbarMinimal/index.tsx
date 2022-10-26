@@ -6,7 +6,7 @@ import {
   UserCircle
 } from 'tabler-icons-react';
 import { NavLink } from 'react-router-dom';
-import { logout } from 'egeria-js-commons';
+import { logout } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
   link: {

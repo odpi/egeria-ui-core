@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { Alert, Button, Container, Group, Paper, PasswordInput, TextInput } from '@mantine/core';
 import { AlertCircle } from 'tabler-icons-react';
-import { login } from 'egeria-js-commons';
+import { login } from '@lfai/egeria-js-commons';
 export class EgeriaLogin extends React.Component {
     constructor(props) {
         super(props);
