@@ -7,6 +7,8 @@ import {
   links
 } from './components';
 
+const test = () => {};
+
 export {
   EgeriaAbout,
   EgeriaApp,
