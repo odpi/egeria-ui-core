@@ -3,7 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Navbar, Tooltip, UnstyledButton, createStyles, Group } from '@mantine/core';
 import { Logout, InfoCircle, UserCircle } from 'tabler-icons-react';
 import { NavLink } from 'react-router-dom';
-import { logout } from 'egeria-js-commons';
+import { logout } from '@lfai/egeria-js-commons';
 const useStyles = createStyles((theme) => ({
     link: {
         width: 50,

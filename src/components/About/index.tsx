@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion, LoadingOverlay, Paper, Text } from '@mantine/core';
-import { capitalize } from "egeria-js-commons";
+import { capitalize } from "@lfai/egeria-js-commons";
 
 interface Props {
   apiUrl: string;

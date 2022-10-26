@@ -3,9 +3,8 @@ import { ActionIcon, Container, Group, Header, TextInput, createStyles, useManti
 import { Search, ArrowRight, ArrowLeft, BrandGithub, BrandSlack, Logout, Login } from 'tabler-icons-react';
 import { FeaturesGrid } from '../Features';
 import { NavLink } from 'react-router-dom';
-import { types } from 'egeria-js-commons';
 import { useEffect, useState } from 'react';
-import { currentJwt, logout, goHome } from 'egeria-js-commons';
+import { currentJwt, logout, goHome, types } from '@lfai/egeria-js-commons';
 const useStyles = createStyles((theme) => ({
     inner: {
         display: 'flex',

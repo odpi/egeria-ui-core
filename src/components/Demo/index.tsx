@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { EgeriaApp } from '../App';
-import { menuIcons } from 'egeria-js-commons';
+import { menuIcons } from '@lfai/egeria-js-commons';
 
 import './index.scss';
 

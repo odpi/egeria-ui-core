@@ -1,7 +1,7 @@
 import {
   currentJwt,
   parseJwt
-} from 'egeria-js-commons';
+} from '@lfai/egeria-js-commons';
 
 import React from "react";
 

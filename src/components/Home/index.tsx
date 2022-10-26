@@ -22,10 +22,9 @@ import {
 
 import { FeaturesGrid } from '../Features';
 import { NavLink } from 'react-router-dom';
-import { types } from 'egeria-js-commons';
 import { useEffect, useState } from 'react';
 
-import { currentJwt, logout, goHome } from 'egeria-js-commons';
+import { currentJwt, logout, goHome, types } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
   inner: {
