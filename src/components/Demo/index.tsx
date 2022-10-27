@@ -16,10 +16,6 @@ const menu = [
 
   return <>
     <div>
-      <h1>Egeria UI Core</h1>
-    </div>
-
-    <div>
       <Router basename={`/`}>
         <Routes>
           <Route path="/*" element={<EgeriaApp menu={menu} />} />
