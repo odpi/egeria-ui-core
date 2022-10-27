@@ -14,4 +14,8 @@ html, body {
   display:flex;
   height:100%;
   width:100%;
+
+  background-image: url(../../../public/transparent.svg);
+  background-repeat: repeat;
+  background-position: top left;
 }
