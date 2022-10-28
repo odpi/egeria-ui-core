@@ -8,6 +8,7 @@ interface HeaderMiddleProps {
         link: string;
         label: string;
     }[];
+    apiUrl?: string;
 }
-export declare function EgeriaHome({ links }: HeaderMiddleProps): JSX.Element;
+export declare function EgeriaHome(props: HeaderMiddleProps): JSX.Element;
 export {};
