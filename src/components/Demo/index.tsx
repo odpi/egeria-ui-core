@@ -20,7 +20,7 @@ const menu = [
       <Router basename={`/`}>
         <Routes>
           <Route path="/" element={<EgeriaHome links={[]} apiUrl={'http://localhost:9000'} />}/>
-          <Route path="/*" element={<EgeriaApp menu={menu} />} />
+          <Route path="/*" element={<EgeriaApp menu={menu} apiUrl={'http://localhost:9000'} />} />
         </Routes>
       </Router>
     </div>

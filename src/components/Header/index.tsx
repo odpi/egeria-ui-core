@@ -1,5 +1,4 @@
 import {
-  Autocomplete,
   Center,
   Group,
   Header,
@@ -7,7 +6,7 @@ import {
 } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 
-import { Search } from 'tabler-icons-react';
+import { MainSearch } from '../MainSearch';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -33,8 +32,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function EgeriaHeader() {
+interface Props {
+  apiUrl?: string;
+}
+
+export function EgeriaHeader(props: Props) {
   const { classes } = useStyles();
+  const { apiUrl } = props;
 
   return (
     <Header height={60} p="md" className={classes.header}>
@@ -44,12 +48,7 @@ export function EgeriaHeader() {
         </Group>
 
         <Center style={{ width: '100%' }}>
-          <Autocomplete
-            placeholder="Search"
-            className={classes.search}
-            icon={<Search size={16} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-          />
+          <MainSearch apiUrl={apiUrl} />
         </Center>
       </div>
     </Header>
