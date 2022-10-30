@@ -1,6 +1,2 @@
 /// <reference types="react" />
-interface Props {
-    apiUrl?: string;
-}
-export declare function MainSearch(props: Props): JSX.Element;
-export {};
+export declare function MainSearch(): JSX.Element;

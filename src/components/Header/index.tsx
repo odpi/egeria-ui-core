@@ -32,13 +32,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface Props {
-  apiUrl?: string;
-}
-
-export function EgeriaHeader(props: Props) {
+export function EgeriaHeader() {
   const { classes } = useStyles();
-  const { apiUrl } = props;
 
   return (
     <Header height={60} p="md" className={classes.header}>
@@ -48,7 +43,7 @@ export function EgeriaHeader(props: Props) {
         </Group>
 
         <Center style={{ width: '100%' }}>
-          <MainSearch apiUrl={apiUrl} />
+          <MainSearch />
         </Center>
       </div>
     </Header>

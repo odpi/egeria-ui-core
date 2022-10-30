@@ -2,6 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
 import React from "react";
 import { Accordion, LoadingOverlay, Paper, Text } from '@mantine/core';
 import { capitalize } from "@lfai/egeria-js-commons";
+import { apiUrl } from '@lfai/egeria-js-commons';
 /**
  *
  * React component used for displaying details about the application instance.
@@ -24,8 +25,7 @@ class EgeriaAbout extends React.Component {
         };
     }
     componentDidMount() {
-        const { apiUrl } = this.props;
-        fetch(`${apiUrl}/about.json`)
+        fetch(`${apiUrl()}/about.json`)
             .then(data => {
             return data.json();
         })

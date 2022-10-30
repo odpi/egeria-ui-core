@@ -23,8 +23,7 @@ const useStyles = createStyles((theme) => ({
         },
     },
 }));
-export function EgeriaHeader(props) {
+export function EgeriaHeader() {
     const { classes } = useStyles();
-    const { apiUrl } = props;
-    return (_jsx(Header, Object.assign({ height: 60, p: "md", className: classes.header }, { children: _jsxs("div", Object.assign({ className: classes.inner }, { children: [_jsx(Group, { children: _jsx(NavLink, Object.assign({ to: '/', style: { height: 50 } }, { children: _jsx("img", { src: "/egeria-logo.svg", alt: "Egeria", title: "Egeria", style: { height: 50 } }) })) }), _jsx(Center, Object.assign({ style: { width: '100%' } }, { children: _jsx(MainSearch, { apiUrl: apiUrl }) }))] })) })));
+    return (_jsx(Header, Object.assign({ height: 60, p: "md", className: classes.header }, { children: _jsxs("div", Object.assign({ className: classes.inner }, { children: [_jsx(Group, { children: _jsx(NavLink, Object.assign({ to: '/', style: { height: 50 } }, { children: _jsx("img", { src: "/egeria-logo.svg", alt: "Egeria", title: "Egeria", style: { height: 50 } }) })) }), _jsx(Center, Object.assign({ style: { width: '100%' } }, { children: _jsx(MainSearch, {}) }))] })) })));
 }

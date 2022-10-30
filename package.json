@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "@lfai/egeria-js-commons": "^4.0.4",
+    "@lfai/egeria-js-commons": "^4.0.10",
     "@mantine/core": "4.2.9",
     "@mantine/hooks": "4.2.9",
     "@mantine/next": "4.2.9",
