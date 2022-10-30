@@ -3,7 +3,7 @@ import { EgeriaApp } from '../App';
 import { menuIcons } from '@lfai/egeria-js-commons';
 
 import './index.scss';
-import { EgeriaHome } from '../Home';
+import { EgeriaHome, links } from '../Home';
 import { EgeriaAbout } from '../About';
 
 export function Demo() {
@@ -22,7 +22,7 @@ const menu = [
     <div>
       <Router basename={`/`}>
         <Routes>
-          <Route path="/" element={<EgeriaHome links={[]} />}/>
+          <Route path="/" element={<EgeriaHome links={links} />}/>
           <Route path="/*" element={<EgeriaApp menu={menu} main={
             <Routes>
               <Route path={"/about"} element={<EgeriaAbout />} />
