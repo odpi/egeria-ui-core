@@ -80,19 +80,19 @@ export function EgeriaNavbar(props: Props) {
   return (
     <Navbar p="md" width={{ base: 80, sm: 80, lg: 80 }}>
       <Navbar.Section grow>
-        <Group direction="column" align="center">
+        <Group>
           {links}
         </Group>
       </Navbar.Section>
 
       <Navbar.Section>
-        <Group direction="column" align="center">
+        <Group>
           <NavbarLink icon={UserCircle} label="Profile" href="/profile" />
         </Group>
-        <Group direction="column" align="center">
+        <Group>
           <NavbarLink icon={InfoCircle} label="About" href="/about" />
         </Group>
-        <Group direction="column" align="center">
+        <Group>
           <NavbarLink icon={Logout} label="Logout" onClick={() => handleLogout()}/>
         </Group>
       </Navbar.Section>

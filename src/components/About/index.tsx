@@ -55,7 +55,7 @@ class EgeriaAbout extends React.Component<Props, State> {
   }
 
   render() {
-    const { data } = this.state;
+    const { data }: any = this.state;
 
     return (<>
       <div style={{ height:'100%', position: 'relative' }}>
@@ -63,12 +63,19 @@ class EgeriaAbout extends React.Component<Props, State> {
 
         <Paper shadow="xs" p="md" style={{height: '100%'}}>
           <Text size="xl">About</Text>
+          <Accordion defaultValue="customization">
+            <Accordion.Item value="customization">
+              <Accordion.Control>Customization</Accordion.Control>
+              <Accordion.Panel>Colors, fonts, shadows and many other parts are customizable to fit your design needs</Accordion.Panel>
+            </Accordion.Item>
+          </Accordion>
+
           <Accordion>
             { Object.keys(data).filter(k => k !== 'loaded').map((k, index) => {
               return (
-                <Accordion.Item label={capitalize(k)} key={index}>
-                  {/* @ts-ignore */}
-                  { capitalize(data[k]) }
+                <Accordion.Item value={k} key={index}>
+                  <Accordion.Control>{ capitalize(k) }</Accordion.Control>
+                  <Accordion.Panel>{ capitalize(data[k]) }</Accordion.Panel>
                 </Accordion.Item>
               );
             }) }
