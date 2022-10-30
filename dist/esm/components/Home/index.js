@@ -13,7 +13,7 @@ import { Search, ArrowRight, ArrowLeft, BrandGithub, BrandSlack, Logout, Login }
 import { FeaturesGrid } from '../Features';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { currentJwt, logout, goHome, fetchTypes } from '@lfai/egeria-js-commons';
+import { currentJwt, logout, goHome, fetchTypes, ABOUT_PATH, ASSET_CATALOG_PATH } from '@lfai/egeria-js-commons';
 const useStyles = createStyles((theme) => ({
     inner: {
         display: 'flex',
@@ -112,17 +112,17 @@ export const links = [
         "label": "Home"
     },
     {
-        "link": "/assets/catalog",
+        "link": ASSET_CATALOG_PATH,
         "label": "Catalog"
     },
     {
-        "link": "/about",
+        "link": ABOUT_PATH,
         "label": "About"
     }
 ];
 const emptyTypesData = [];
 export function EgeriaHome(props) {
-    const { links, apiUrl } = props;
+    const { links } = props;
     const navigate = useNavigate();
     const [q, setQ] = useState('');
     const [types, setTypes] = useState([]);
@@ -136,18 +136,18 @@ export function EgeriaHome(props) {
     useEffect(() => {
         setTypesData(Object.assign(Object.assign({}, typesData), { isLoading: true }));
         const bringTypes = () => __awaiter(this, void 0, void 0, function* () {
-            const rawTypesData = yield fetchTypes(apiUrl);
+            const rawTypesData = yield fetchTypes();
             setTypesData({
                 isLoading: false,
                 typesData: [...rawTypesData]
             });
         });
         bringTypes();
-    }, [apiUrl]);
+    }, []);
     const items = links.map((link, index) => (_jsx(NavLink, Object.assign({ className: classes.link, to: link.link }, { children: link.label }), index)));
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            navigate(`/assets/catalog?q=${q}&types=${types.join(',')}`);
+            navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}`);
         }
     };
     return (_jsxs(_Fragment, { children: [_jsx(Header, Object.assign({ height: 56, mb: 15 }, { children: _jsxs(Container, Object.assign({ className: classes.inner }, { children: [_jsx(Group, Object.assign({ className: classes.links, spacing: 5 }, { children: items })), _jsx("img", { src: "/egeria-logo.svg", alt: "Egeria", title: "Egeria", style: { height: 40 } }), _jsxs(Group, Object.assign({ spacing: 0, className: classes.social, position: "right", noWrap: true }, { children: [_jsx(ActionIcon, Object.assign({ size: "lg", title: "Github", onClick: () => { window.open('https://github.com/odpi', '_blank'); } }, { children: _jsx(BrandGithub, { size: 18 }) })), _jsx(ActionIcon, Object.assign({ size: "lg", title: "Slack", onClick: () => { window.open('https://lfaifoundation.slack.com', '_blank'); } }, { children: _jsx(BrandSlack, { size: 18 }) })), isLoggedIn && _jsx(ActionIcon, Object.assign({ size: "lg", title: 'Logout', onClick: () => { logout(goHome); } }, { children: _jsx(Logout, { size: 18 }) })), !isLoggedIn && _jsx(NavLink, Object.assign({ to: `/login` }, { children: _jsx(ActionIcon, Object.assign({ size: "lg", title: `Login` }, { children: _jsx(Login, { size: 18 }) })) }))] }))] })) })), _jsx(Container, { children: _jsxs("div", Object.assign({ className: classes.innerHeader }, { children: [_jsxs("div", Object.assign({ className: classes.content }, { children: [_jsx(Title, Object.assign({ className: classes.title }, { children: "Egeria Project" })), _jsx(Text, Object.assign({ color: "dimmed", mt: "md", style: { textAlign: 'justify' } }, { children: "Open source project dedicated to enabling teams to collaborate by making metadata open and automatically exchanged between tools and platforms, no matter which vendor they come from." }))] })), _jsx(Paper, Object.assign({ shadow: "md", style: { width: 560 }, className: classes.image }, { children: _jsx("iframe", { width: "560", height: "315", src: "https://www.youtube.com/embed/dgeOAJF6jq8?controls=0&start=1464", title: "YouTube video player", frameBorder: "0", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowFullScreen: true }) }))] })) }), _jsxs(Container, Object.assign({ style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' } }, { children: [_jsx(MultiSelect, { data: typesData.typesData, value: types, onChange: (value) => setTypes([...value]), radius: "xl", size: "md", placeholder: "Type", style: { width: '30%' } }), _jsx(TextInput, { style: { width: '69%' }, icon: _jsx(Search, { size: 18 }), radius: "xl", size: "md", value: q, onKeyPress: handleKeyPress, onChange: (event) => setQ(event.currentTarget.value), rightSection: _jsx(ActionIcon, Object.assign({ size: 32, radius: "xl", color: theme.primaryColor, variant: "filled" }, { children: theme.dir === 'ltr' ? _jsx(ArrowRight, { size: 18 }) : _jsx(ArrowLeft, { size: 18 }) })), placeholder: "Search terms", rightSectionWidth: 42 })] })), _jsx(FeaturesGrid, {}), _jsx(LoadingOverlay, { visible: typesData.isLoading })] }));

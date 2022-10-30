@@ -1,16 +1,11 @@
-import { fetchTypes } from "@lfai/egeria-js-commons";
+import { fetchTypes, ASSET_CATALOG_PATH } from "@lfai/egeria-js-commons";
 import { Loader, MultiSelect, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "tabler-icons-react";
 
-interface Props {
-  apiUrl?: string;
-}
-
-export function MainSearch(props: Props) {
+export function MainSearch() {
   const navigate = useNavigate();
-  const { apiUrl } = props;
 
   const [typesData, setTypesData]: [any, any] = useState({
     isLoading: false,
@@ -22,7 +17,7 @@ export function MainSearch(props: Props) {
 
   const handleKeyPress = (event: any) => {
     if(event.key === 'Enter'){
-      navigate(`/assets/catalog?q=${q}&types=${types.join(',')}`)
+      navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}`)
     }
   };
 
@@ -30,7 +25,7 @@ export function MainSearch(props: Props) {
     setTypesData({...typesData, isLoading: true});
 
     const bringTypes = async () => {
-      const rawTypesData = await fetchTypes(apiUrl);
+      const rawTypesData = await fetchTypes();
 
       setTypesData({
         isLoading: false,
@@ -39,7 +34,7 @@ export function MainSearch(props: Props) {
     };
 
     bringTypes();
-  }, [apiUrl]);
+  }, []);
 
   return <>
     <MultiSelect data={typesData.typesData}

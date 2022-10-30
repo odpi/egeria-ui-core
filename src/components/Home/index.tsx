@@ -27,7 +27,14 @@ import { FeaturesGrid } from '../Features';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { currentJwt, logout, goHome, fetchTypes } from '@lfai/egeria-js-commons';
+import {
+  currentJwt,
+  logout,
+  goHome,
+  fetchTypes,
+  ABOUT_PATH,
+  ASSET_CATALOG_PATH
+} from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -148,11 +155,11 @@ export const links = [
     "label": "Home"
   },
   {
-    "link": "/assets/catalog",
+    "link": ASSET_CATALOG_PATH,
     "label": "Catalog"
   },
   {
-    "link": "/about",
+    "link": ABOUT_PATH,
     "label": "About"
   }
 ];
@@ -161,11 +168,10 @@ const emptyTypesData: Array<any> = [];
 
 interface HeaderMiddleProps {
   links: { link: string; label: string }[];
-  apiUrl?: string;
 }
 
 export function EgeriaHome(props: HeaderMiddleProps) {
-  const { links, apiUrl } = props;
+  const { links } = props;
   const navigate = useNavigate();
 
   const [q, setQ] = useState('');
@@ -184,7 +190,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
     setTypesData({...typesData, isLoading: true});
 
     const bringTypes = async () => {
-      const rawTypesData = await fetchTypes(apiUrl);
+      const rawTypesData = await fetchTypes();
 
       setTypesData({
         isLoading: false,
@@ -193,7 +199,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
     };
 
     bringTypes();
-  }, [apiUrl]);
+  }, []);
 
   const items = links.map((link, index) => (
     <NavLink className={classes.link} to={link.link} key={index}>{link.label}</NavLink>
@@ -201,7 +207,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
 
   const handleKeyPress = (event: any) => {
     if(event.key === 'Enter'){
-      navigate(`/assets/catalog?q=${q}&types=${types.join(',')}`)
+      navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}`)
     }
   };
 

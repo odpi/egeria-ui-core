@@ -8,11 +8,10 @@ export class EgeriaLogin extends React.Component {
         super(props);
         this.handleSubmit = () => {
             const { username, password } = this.state;
-            const { apiUrl } = this.props;
             this.setState({
                 isLoading: true
             }, () => {
-                login(username, password, apiUrl).then((response) => {
+                login(username, password).then((response) => {
                     let errors = [];
                     if (!response.ok) {
                         switch (response.status) {

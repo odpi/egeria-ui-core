@@ -15,12 +15,14 @@ const menu = [
   { customIcon: menuIcons.repositoryExplorer, label: 'Repository Explorer', href: '/repository-explorer' }
 ];
 
+  console.log(process.env.REACT_APP_API_URL);
+
   return <>
     <div>
       <Router basename={`/`}>
         <Routes>
-          <Route path="/" element={<EgeriaHome links={[]} apiUrl={'http://localhost:9000'} />}/>
-          <Route path="/*" element={<EgeriaApp menu={menu} apiUrl={'http://localhost:9000'} />} />
+          <Route path="/" element={<EgeriaHome links={[]} />}/>
+          <Route path="/*" element={<EgeriaApp menu={menu} />} />
         </Routes>
       </Router>
     </div>
