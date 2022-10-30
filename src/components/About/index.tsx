@@ -63,13 +63,6 @@ class EgeriaAbout extends React.Component<Props, State> {
 
         <Paper shadow="xs" p="md" style={{height: '100%'}}>
           <Text size="xl">About</Text>
-          <Accordion defaultValue="customization">
-            <Accordion.Item value="customization">
-              <Accordion.Control>Customization</Accordion.Control>
-              <Accordion.Panel>Colors, fonts, shadows and many other parts are customizable to fit your design needs</Accordion.Panel>
-            </Accordion.Item>
-          </Accordion>
-
           <Accordion>
             { Object.keys(data).filter(k => k !== 'loaded').map((k, index) => {
               return (

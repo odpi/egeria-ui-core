@@ -1,29 +1,20 @@
 import {
-  ActionIcon,
   Container,
   Group,
   Header,
   TextInput,
   createStyles,
-  useMantineTheme,
   MultiSelect,
   LoadingOverlay,
   Paper,
-  Title,
-  Text
+  Checkbox,
+  Button
 } from '@mantine/core';
 
 import {
-  Search,
-  ArrowRight,
-  ArrowLeft,
-  BrandGithub,
-  BrandSlack,
-  Logout,
-  Login
+  Search
 } from 'tabler-icons-react';
 
-import { FeaturesGrid } from '../Features';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -56,23 +47,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  social: {
-    width: 260,
-
-    [theme.fn.smallerThan('sm')]: {
-      width: 'auto',
-      marginLeft: 'auto',
-    },
-  },
-
-  burger: {
-    marginRight: theme.spacing.md,
-
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
   link: {
     display: 'block',
     lineHeight: 1,
@@ -87,66 +61,6 @@ const useStyles = createStyles((theme) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
   },
-
-  linkActive: {
-    '&, &:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
-          : theme.colors[theme.primaryColor][0],
-      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 3 : 7],
-    },
-  },
-
-  innerHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    paddingTop: theme.spacing.xl * 2,
-    paddingBottom: theme.spacing.xl * 2,
-  },
-
-  content: {
-    maxWidth: 480,
-    marginRight: theme.spacing.xl * 3,
-
-    [theme.fn.smallerThan('md')]: {
-      maxWidth: '100%',
-      marginRight: 0,
-    },
-  },
-
-  title: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 44,
-    lineHeight: 1.2,
-    fontWeight: 900,
-
-    [theme.fn.smallerThan('xs')]: {
-      fontSize: 28,
-    },
-  },
-
-  control: {
-    [theme.fn.smallerThan('xs')]: {
-      flex: 1,
-    },
-  },
-
-  image: {
-    flex: 1,
-
-    [theme.fn.smallerThan('md')]: {
-      display: 'none',
-    },
-  },
-
-  highlight: {
-    position: 'relative',
-    backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-    borderRadius: theme.radius.sm,
-    padding: '4px 12px',
-  }
 }));
 
 export const links = [
@@ -177,9 +91,11 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   const [q, setQ] = useState('');
   const [types, setTypes]: [any, any] = useState([]);
 
-  const theme = useMantineTheme();
   const { classes} = useStyles();
   const isLoggedIn = currentJwt();
+
+  const [exactMatch, setExactMatch] = useState(false);
+  const [caseSensitive, setCaseSensitive] = useState(false);
 
   const [typesData, setTypesData] = useState({
     isLoading: true,
@@ -205,98 +121,84 @@ export function EgeriaHome(props: HeaderMiddleProps) {
     <NavLink className={classes.link} to={link.link} key={index}>{link.label}</NavLink>
   ));
 
+  const submit = () => {
+    navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+  }
+
   const handleKeyPress = (event: any) => {
     if(event.key === 'Enter'){
-      navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}`)
+      submit();
     }
   };
 
   return (<>
-    <Header height={56} mb={15}>
+    <Header height={56} mb={100}>
       <Container className={classes.inner}>
         <Group className={classes.links} spacing={5}>
           {items}
         </Group>
 
-        <img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:40}}/>
-
-        <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon size="lg"
-                      title="Github"
-                      onClick={() => { window.open('https://github.com/odpi', '_blank'); }}>
-            <BrandGithub size={18} />
-          </ActionIcon>
-          <ActionIcon size="lg"
-                      title="Slack"
-                      onClick={() => { window.open('https://lfaifoundation.slack.com', '_blank'); }}>
-            <BrandSlack size={18} />
-          </ActionIcon>
-
-          { isLoggedIn && <ActionIcon size="lg" title={'Logout'} onClick={() => { logout(goHome); }}>
-                            <Logout size={18} />
-                          </ActionIcon> }
+        <Group spacing={0} position="right" noWrap>
+          { isLoggedIn && <Button variant="light" onClick={() => { logout(goHome); }}>
+            Logout
+          </Button> }
 
           { !isLoggedIn && <NavLink to={`/login`}>
-                            <ActionIcon size="lg" title={`Login`}>
-                              <Login size={18} />
-                            </ActionIcon>
-                          </NavLink> }
+            <Button variant="light">
+              Login
+            </Button>
+          </NavLink> }
         </Group>
       </Container>
     </Header>
 
+    <Container style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mb={50}>
+      <NavLink to={'/'}><img src="http://localhost:3000/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
+    </Container>
+
     <Container>
-      <div className={classes.innerHeader}>
-        <div className={classes.content}>
-          <Title className={classes.title}>
-            Egeria Project
-          </Title>
-          <Text color="dimmed" mt="md" style={{textAlign: 'justify'}}>
-            Open source project dedicated to enabling teams to collaborate by making metadata open and automatically exchanged between tools and platforms, no matter which vendor they come from.
-          </Text>
+      <Paper shadow="md" radius="lg">
+        <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
+          <TextInput
+            style={{width:'69%'}}
+            icon={<Search size={18} />}
+            radius="lg"
+            size="md"
+            value={q}
+            onKeyPress={handleKeyPress}
+            onChange={(event: any) => setQ(event.currentTarget.value)}
+            placeholder="Search terms"
+            rightSectionWidth={42}
+          />
+
+          <MultiSelect
+            data={typesData.typesData}
+            value={types}
+            onChange={(value: any) => setTypes([...value])}
+            radius="lg"
+            size="md"
+            placeholder="Type"
+            style={{width:'30%'}}
+          />
         </div>
+        <div style={{display: 'flex', padding: 20, paddingTop: 0, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
+          <div style={{width: '40%', display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+            <Checkbox mr="xl"
+                      label={'Exact match'}
+                      checked={exactMatch}
+                      onChange={(event) => setExactMatch(event.currentTarget.checked)} />
 
-        <Paper shadow="md" style={{width: 560}} className={classes.image}>
-          <iframe width="560"
-                height="315"
-                src="https://www.youtube.com/embed/dgeOAJF6jq8?controls=0&amp;start=1464"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen></iframe>
+            <Checkbox mr="xl"
+                      label={'Case sensitive'}
+                      checked={caseSensitive}
+                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)} />
+          </div>
+          <div style={{width:'60%'}}>
+            <Button fullWidth onClick={() => submit()}>Search</Button>
+          </div>
+        </div>
         </Paper>
-      </div>
     </Container>
-
-    <Container style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-      <MultiSelect
-        data={typesData.typesData}
-        value={types}
-        onChange={(value: any) => setTypes([...value])}
-        radius="xl"
-        size="md"
-        placeholder="Type"
-        style={{width:'30%'}}
-      />
-      <TextInput
-        style={{width:'69%'}}
-        icon={<Search size={18} />}
-        radius="xl"
-        size="md"
-        value={q}
-        onKeyPress={handleKeyPress}
-        onChange={(event: any) => setQ(event.currentTarget.value)}
-        rightSection={
-          <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-            {theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
-          </ActionIcon>
-        }
-        placeholder="Search terms"
-        rightSectionWidth={42}
-      />
-    </Container>
-
-    <FeaturesGrid />
 
     <LoadingOverlay visible={typesData.isLoading} />
   </>);
