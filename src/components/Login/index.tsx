@@ -1,49 +1,45 @@
-import React from 'react';
-
-import {
-  Alert,
-  Button,
-  Container,
-  Group,
-  Paper,
-  PasswordInput,
-  TextInput
-} from '@mantine/core';
-
+import { Alert, Button, Container, Group, LoadingOverlay, Paper, PasswordInput, TextInput } from '@mantine/core';
+import { useState } from 'react';
 import { AlertCircle } from 'tabler-icons-react';
-
 import { login } from '@lfai/egeria-js-commons';
 
 interface Props {
-  loginCallback: Function;
+  loginCallback?: any;
 }
 
-interface State {
-  errors: Array<string>
-  isLoading: Boolean
-  username: string
-  password: string
-}
+export function EgeriaLogin(props: Props) {
+  const { loginCallback } = props;
 
-export class EgeriaLogin extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  const [username, setUsername] = useState({value: '', isValid: false, isPristine: true});
+  const [password, setPassword] = useState({value: '', isValid: false, isPristine: true});
+  const [errors, setErrors]: [any, any] = useState([]);
 
-    this.state = {
-      errors: [],
-      isLoading: false,
-      password: '',
-      username: ''
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validate = (field: any, value: any) => {
+    if(value !== '') {
+      return {
+        ...field,
+        value: value,
+        isValid: true
+      };
+    } else {
+      return {
+        ...field,
+        value: value,
+        isValid: false
+      };
     }
   }
 
-  handleSubmit = () => {
-    const { username, password } = this.state;
+  const handleSubmit = () => {
+    setUsername({...validate({...username, isPristine: false}, username.value) });
+    setPassword({...validate({...password, isPristine: false}, password.value) });
 
-    this.setState({
-      isLoading: true
-    }, () => {
-      login(username, password).then((response: any) => {
+    if(username.isValid && password.isValid) {
+      setIsLoading(true);
+
+      login(username.value, password.value).then((response: any) => {
         let errors = [];
 
         if (!response.ok) {
@@ -59,72 +55,61 @@ export class EgeriaLogin extends React.Component<Props, State> {
               break;
           }
 
-          this.setState({
-            errors,
-            isLoading: false
-          });
+          setErrors(errors);
+          setIsLoading(false);
         } else {
-          const { loginCallback } = this.props;
-
           loginCallback();
         }
       });
-    });
-  }
-
-  handleKeyPress = (e:any) => {
-    if (e.key === 'Enter') {
-     this.handleSubmit();
     }
-  }
+  };
 
-  componentDidMount() {
-    document.addEventListener("keypress", this.handleKeyPress);
-  }
+  const handleKeyPress = (e:any) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
-  componentWillUnmount() {
-    document.removeEventListener("keypress", this.handleKeyPress);
-  }
+  return <>
+     <Container mt={100} size={420}>
+       <Group align="center" className="egeria-logo">
+         <img src="http://localhost:3000/egeria-logo.svg" style={{width:'80%', margin: '0 auto'}} alt="Egeria" title="Egeria" />
+       </Group>
 
-  render() {
-    const { errors, username, password } = this.state;
+       <div style={{ width: 420, position: 'relative' }}>
+         <LoadingOverlay visible={isLoading} />
 
-    return (
-      <Container size={420} my={40}>
-        <Group
-          align="center"
-          className="egeria-logo"
-        >
-          <img src="/egeria-logo.svg" alt="Egeria" title="Egeria" />
-        </Group>
+         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+           { errors.length > 0 && <Group mb={20}>
+             <Alert style={{width:420}} icon={<AlertCircle size={16} />} title="Warning!" color="red">
+               { errors.map((e: any, key: any) => <p key={key}>{e}</p>) }
+             </Alert>
+           </Group> }
 
-        { errors.length > 0 && <Group mt={30}>
-          <Alert style={{width:420}} icon={<AlertCircle size={16} />} title="Bummer!" color="red" radius="md" variant="outline">
-            { errors.map((e, key) => <p key={key}>{e}</p>) }
-          </Alert>
-        </Group> }
+           <TextInput
+             label="Username"
+             placeholder="Your username"
+             required
+             error={!username.isValid && !username.isPristine ? 'Field is required.' : ''}
+             value={username.value}
+             onKeyPress={handleKeyPress}
+             onChange={(event) => setUsername({...validate({...username, isPristine: false}, event.currentTarget.value) }) } />
 
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput
-            label="Username"
-            placeholder="Your username"
-            required
-            value={username}
-            onChange={(event) => this.setState({username: event.currentTarget.value})} />
+           <PasswordInput
+             label="Password"
+             placeholder="Your password"
+             required
+             error={!password.isValid && !password.isPristine ? 'Field is required.' : ''}
+             mt="md"
+             value={password.value}
+             onKeyPress={handleKeyPress}
+             onChange={(event) => setPassword({...validate({...username, isPristine: false}, event.currentTarget.value) }) } />
 
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            required
-            mt="md"
-            value={password}
-            onChange={(event) => this.setState({password: event.currentTarget.value})} />
-
-          <Button fullWidth mt="xl" onClick={() => this.handleSubmit()}>
-            Sign in
-          </Button>
-        </Paper>
-      </Container>
-    );
-  }
+           <Button fullWidth mt="xl" onClick={() => handleSubmit()}>
+             Sign in
+           </Button>
+         </Paper>
+       </div>
+     </Container>
+  </>;
 }
