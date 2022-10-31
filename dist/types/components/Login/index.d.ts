@@ -1,19 +1,6 @@
-import React from 'react';
+/// <reference types="react" />
 interface Props {
-    loginCallback: Function;
+    loginCallback?: any;
 }
-interface State {
-    errors: Array<string>;
-    isLoading: Boolean;
-    username: string;
-    password: string;
-}
-export declare class EgeriaLogin extends React.Component<Props, State> {
-    constructor(props: Props);
-    handleSubmit: () => void;
-    handleKeyPress: (e: any) => void;
-    componentDidMount(): void;
-    componentWillUnmount(): void;
-    render(): JSX.Element;
-}
+export declare function EgeriaLogin(props: Props): JSX.Element;
 export {};
