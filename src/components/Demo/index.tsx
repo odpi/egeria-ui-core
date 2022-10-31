@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { EgeriaApp } from '../App';
-import { menuIcons } from '@lfai/egeria-js-commons';
+import { goHome, menuIcons } from '@lfai/egeria-js-commons';
 
 import './index.scss';
 import { EgeriaHome, links } from '../Home';
 import { EgeriaAbout } from '../About';
+import { EgeriaLogin } from '../Login';
 
 export function Demo() {
 
@@ -23,6 +24,7 @@ const menu = [
       <Router basename={`/`}>
         <Routes>
           <Route path="/" element={<EgeriaHome links={links} />}/>
+          <Route path="/login" element={<EgeriaLogin loginCallback={ goHome } /> } />
           <Route path="/*" element={<EgeriaApp menu={menu} main={
             <Routes>
               <Route path={"/about"} element={<EgeriaAbout />} />
