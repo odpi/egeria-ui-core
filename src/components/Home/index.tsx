@@ -1,4 +1,5 @@
 import {
+  Alert,
   Container,
   Group,
   Header,
@@ -12,6 +13,7 @@ import {
 } from '@mantine/core';
 
 import {
+  AlertCircle,
   Search
 } from 'tabler-icons-react';
 
@@ -91,6 +93,13 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   const [q, setQ] = useState('');
   const [types, setTypes]: [any, any] = useState([]);
 
+  const [inputValidation, setErrorInputValidation] = useState(
+      {
+        isError: false,
+        errorMessage: ''
+      } as any
+  );
+
   const { classes} = useStyles();
   const isLoggedIn = currentJwt();
 
@@ -122,7 +131,16 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   ));
 
   const submit = () => {
-    navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+    const paramsValid = areParamsValid();
+    if (paramsValid && inputValidation.isError) {
+      setErrorInputValidation({
+        isError :false,
+        errorMessage : ''
+      })
+    }
+    if (areParamsValid()) {
+      navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+    }
   }
 
   const handleKeyPress = (event: any) => {
@@ -130,6 +148,26 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       submit();
     }
   };
+
+  const areParamsValid = ()  => {
+    if (q.length < 3) {
+      setErrorInputValidation({
+        isError :true,
+        errorMessage : 'The query must be at least 3 characters long'
+      });
+      return false;
+    }
+    const selectedTypes : Array<string> = types;
+    if (!selectedTypes || selectedTypes.length === 0) {
+      setErrorInputValidation({
+        isError :true,
+        errorMessage : 'You must select at least one type'
+      })
+      return false;
+    }
+    return true;
+  }
+
 
   return (<>
     <Header height={56} mb={100}>
@@ -196,6 +234,13 @@ export function EgeriaHome(props: HeaderMiddleProps) {
           <div style={{width:'60%'}}>
             <Button fullWidth onClick={() => submit()}>Search</Button>
           </div>
+        </div>
+        <div>
+          {inputValidation.isError &&
+              <Alert icon={<AlertCircle size={16}/>} color="red">
+                {<p>{inputValidation.errorMessage}</p>}
+              </Alert>
+          }
         </div>
         </Paper>
     </Container>
