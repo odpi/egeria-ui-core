@@ -1,6 +1,6 @@
 {
   "name": "@lfai/egeria-ui-core",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "description": "Core library that includes generic reactjs components used across the user interface.",
   "license": "Apache-2.0",
   "repository": {
@@ -42,7 +42,7 @@
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/serialize": "^1.1.1",
-    "@lfai/egeria-js-commons": "^4.0.10",
+    "@lfai/egeria-js-commons": "^4.2.0",
     "@mantine/core": "^5.6.3",
     "@mantine/hooks": "^5.6.3",
     "react": "^18.2.0",
