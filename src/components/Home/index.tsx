@@ -1,5 +1,4 @@
 import {
-  Alert,
   Container,
   Group,
   Header,
@@ -13,7 +12,6 @@ import {
 } from '@mantine/core';
 
 import {
-  AlertCircle,
   Search
 } from 'tabler-icons-react';
 
@@ -25,8 +23,11 @@ import {
   logout,
   goHome,
   fetchTypes,
+  isStringLonger,
+  isArrayEmpty,
   ABOUT_PATH,
-  ASSET_CATALOG_PATH
+  ASSET_CATALOG_PATH,
+  QUERY_MIN_LENGTH
 } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
@@ -87,20 +88,13 @@ interface HeaderMiddleProps {
 }
 
 export function EgeriaHome(props: HeaderMiddleProps) {
-  const { links } = props;
+  const {links} = props;
   const navigate = useNavigate();
 
-  const [q, setQ] = useState('');
-  const [types, setTypes]: [any, any] = useState([]);
+  const [q, setQ] = useState({value: '', isPristine: true});
+  const [types, setTypes]: [any, any] = useState({value: [], isPristine: true});
 
-  const [inputValidation, setErrorInputValidation] = useState(
-      {
-        isError: false,
-        errorMessage: ''
-      } as any
-  );
-
-  const { classes} = useStyles();
+  const {classes} = useStyles();
   const isLoggedIn = currentJwt();
 
   const [exactMatch, setExactMatch] = useState(false);
@@ -131,15 +125,8 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   ));
 
   const submit = () => {
-    const paramsValid = areParamsValid();
-    if (paramsValid && inputValidation.isError) {
-      setErrorInputValidation({
-        isError :false,
-        errorMessage : ''
-      })
-    }
-    if (areParamsValid()) {
-      navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+    if (isStringLonger(q.value, QUERY_MIN_LENGTH) && !isArrayEmpty(types.value)) {
+      navigate(`${ASSET_CATALOG_PATH}?q=${q.value}&types=${types.value.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
     }
   }
 
@@ -148,26 +135,6 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       submit();
     }
   };
-
-  const areParamsValid = ()  => {
-    if (q.length < 3) {
-      setErrorInputValidation({
-        isError :true,
-        errorMessage : 'The query must be at least 3 characters long'
-      });
-      return false;
-    }
-    const selectedTypes : Array<string> = types;
-    if (!selectedTypes || selectedTypes.length === 0) {
-      setErrorInputValidation({
-        isError :true,
-        errorMessage : 'You must select at least one type'
-      })
-      return false;
-    }
-    return true;
-  }
-
 
   return (<>
     <Header height={56} mb={100}>
@@ -198,25 +165,28 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       <Paper shadow="md" radius="lg">
         <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
           <TextInput
-            style={{width:'69%'}}
-            icon={<Search size={18} />}
-            radius="lg"
-            size="md"
-            value={q}
-            onKeyPress={handleKeyPress}
-            onChange={(event: any) => setQ(event.currentTarget.value)}
-            placeholder="Search terms"
-            rightSectionWidth={42}
+              style={{width: '69%'}}
+              icon={<Search size={18}/>}
+              radius="lg"
+              size="md"
+              value={q.value}
+              required
+              error={!q.isPristine && !isStringLonger(q.value, QUERY_MIN_LENGTH) ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
+              onKeyPress={handleKeyPress}
+              onChange={(event: any) => setQ({value: event.currentTarget.value, isPristine: false})}
+              placeholder="Search terms"
+              rightSectionWidth={42}
           />
 
           <MultiSelect
-            data={typesData.typesData}
-            value={types}
-            onChange={(value: any) => setTypes([...value])}
-            radius="lg"
-            size="md"
-            placeholder="Type"
-            style={{width:'30%'}}
+              data={typesData.typesData}
+              value={types.value}
+              error={!types.isPristine && isArrayEmpty(types.value) ? 'At least one type has to be selected' : ''}
+              onChange={(value: any) => setTypes({value: [...value], isPristine: false})}
+              radius="lg"
+              size="md"
+              placeholder="Type"
+              style={{width: '30%'}}
           />
         </div>
         <div style={{display: 'flex', padding: 20, paddingTop: 0, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -234,13 +204,6 @@ export function EgeriaHome(props: HeaderMiddleProps) {
           <div style={{width:'60%'}}>
             <Button fullWidth onClick={() => submit()}>Search</Button>
           </div>
-        </div>
-        <div>
-          {inputValidation.isError &&
-              <Alert icon={<AlertCircle size={16}/>} color="red">
-                {<p>{inputValidation.errorMessage}</p>}
-              </Alert>
-          }
         </div>
         </Paper>
     </Container>
