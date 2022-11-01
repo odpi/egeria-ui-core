@@ -1,6 +1,6 @@
 {
   "name": "@lfai/egeria-ui-core",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "description": "Core library that includes generic reactjs components used across the user interface.",
   "license": "Apache-2.0",
   "repository": {
