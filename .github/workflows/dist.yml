@@ -1,11 +1,11 @@
-name: egeria-ui-core dist
+name: egeria-ui-core publish
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     if: github.repository == 'odpi/egeria-ui-core'
     steps:
@@ -13,31 +13,24 @@ jobs:
         uses: actions/checkout@v3.1.0
       - name: Check if version has been updated
         id: check
-        uses: EndBug/version-check@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v3.5.0
+        uses: EndBug/version-check@v1
+      - name: Set up Node.js for NPM
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.13.0"
-      - name: Report npm and node version
-        run: |
-          node -v
-          npm -v
-      - name: Install Dependencies
+          node-version: 16.13.0
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
         run: npm install
-      - name: Build
+      - name: Run tests
+        if: steps.check.outputs.changed == 'true'
+        run: npm run test
+      - name: Run build
+        if: steps.check.outputs.changed == 'true'
         run: npm run build
+      - name: Publish package to NPM
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish
         env:
-          NODE_OPTIONS: "--max_old_space_size=6144"
-      - name: Commit files
-        continue-on-error: true
-        id: commit
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git commit -m "Update dist folder" -a --signoff
-      - name: Push changes
-        if: steps.commit.outcome == 'success'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
