@@ -73,7 +73,7 @@ export function EgeriaLogin(props: Props) {
   return <>
      <Container mt={100} size={420}>
        <Group align="center" className="egeria-logo">
-         <img src="http://localhost:3000/egeria-logo.svg" style={{width:'80%', margin: '0 auto'}} alt="Egeria" title="Egeria" />
+         <img src="/egeria-logo.svg" style={{width:'80%', margin: '0 auto'}} alt="Egeria" title="Egeria" />
        </Group>
 
        <div style={{ width: 420, position: 'relative' }}>
