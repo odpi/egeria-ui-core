@@ -158,7 +158,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
     </Header>
 
     <Container style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} mb={50}>
-      <NavLink to={'/'}><img src="http://localhost:3000/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
+      <NavLink to={'/'}><img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
     </Container>
 
     <Container>
