@@ -28,7 +28,7 @@ export function EgeriaApp(props: React.PropsWithChildren<Props>) {
       navbar={<EgeriaNavbar menu={menu ? menu : []} />}
       header={<EgeriaHeader />}
     >
-      <div style={{width:'100%', height:'100%'}}>
+      <div style={{width:'100%', height:'100%', zIndex: 50, position: 'relative'}}>
         { props.main }
       </div>
     </AppShell>
