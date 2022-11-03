@@ -23,8 +23,8 @@ const menu = [
     <div>
       <Router basename={`/`}>
         <Routes>
-          <Route path="/" element={<EgeriaHome links={links} />}/>
-          <Route path="/login" element={<EgeriaLogin loginCallback={ goHome } /> } />
+          <Route path="/" element={<EgeriaApp single={true} main={<EgeriaHome links={links} />} />} />
+          <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={ goHome } /> } />} />
           <Route path="/*" element={<EgeriaApp menu={menu} main={
             <Routes>
               <Route path={"/about"} element={<EgeriaAbout />} />
