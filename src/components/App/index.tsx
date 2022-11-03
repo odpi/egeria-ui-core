@@ -1,5 +1,6 @@
 import {
-  AppShell
+  AppShell,
+  useMantineTheme
 } from '@mantine/core';
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import { useEffect } from 'react';
@@ -24,6 +25,7 @@ const listenForAPIErrors = (e: any) => {
 
 export function EgeriaApp(props: React.PropsWithChildren<Props>) {
   const { single, menu, main } = props;
+  const theme = useMantineTheme();
 
   useEffect(() => {
     document.addEventListener('EGERIA_API_ERROR', listenForAPIErrors);
@@ -40,6 +42,11 @@ export function EgeriaApp(props: React.PropsWithChildren<Props>) {
       </> }
 
       { !single && <AppShell
+        styles={{
+          main: {
+            background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]
+          }
+        }}
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         fixed
