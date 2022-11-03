@@ -165,6 +165,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
             radius="lg"
             size="md"
             value={q}
+            disabled={typesData.typesData.length === 0}
             onKeyPress={handleKeyPress}
             onChange={(event: any) => setQ(event.currentTarget.value)}
             placeholder="Search terms"
@@ -173,6 +174,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
 
           <MultiSelect
             data={typesData.typesData}
+            disabled={typesData.typesData.length === 0}
             value={types}
             onChange={(value: any) => setTypes([...value])}
             radius="lg"
@@ -186,15 +188,19 @@ export function EgeriaHome(props: HeaderMiddleProps) {
             <Checkbox mr="xl"
                       label={'Exact match'}
                       checked={exactMatch}
+                      disabled={typesData.typesData.length === 0}
                       onChange={(event) => setExactMatch(event.currentTarget.checked)} />
 
             <Checkbox mr="xl"
                       label={'Case sensitive'}
                       checked={caseSensitive}
+                      disabled={typesData.typesData.length === 0}
                       onChange={(event) => setCaseSensitive(event.currentTarget.checked)} />
           </div>
           <div style={{width:'60%'}}>
-            <Button fullWidth onClick={() => submit()}>Search</Button>
+            <Button fullWidth
+                    onClick={() => submit()}
+                    disabled={typesData.typesData.length === 0}>Search</Button>
           </div>
         </div>
         </Paper>

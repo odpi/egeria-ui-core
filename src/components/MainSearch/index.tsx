@@ -39,7 +39,7 @@ export function MainSearch() {
   return <>
     <MultiSelect data={typesData.typesData}
                   value={types}
-                  disabled={typesData.isLoading}
+                  disabled={typesData.isLoading || typesData.typesData.length === 0}
                   onChange={(value: any) => setTypes([...value])}
                   radius="sm"
                   size="xs"
@@ -54,7 +54,7 @@ export function MainSearch() {
                 radius="sm"
                 size="xs"
                 value={q}
-                disabled={typesData.isLoading}
+                disabled={typesData.isLoading || typesData.typesData.length === 0}
                 onKeyPress={handleKeyPress}
                 onChange={(event: any) => setQ(event.currentTarget.value)}
                 placeholder="Search terms"
