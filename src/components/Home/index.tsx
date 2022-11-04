@@ -170,6 +170,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
               radius="lg"
               size="md"
               value={q.value}
+              disabled={typesData.typesData.length === 0}
               required
               error={!q.isPristine && !q.isValid ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
               onKeyPress={handleKeyPress}
@@ -184,6 +185,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
 
           <MultiSelect
               data={typesData.typesData}
+              disabled={typesData.typesData.length === 0}
               value={types.value}
               error={!types.isPristine && !types.isValid ? 'At least one type has to be selected' : ''}
               onChange={(value: any) => setTypes({
@@ -202,15 +204,19 @@ export function EgeriaHome(props: HeaderMiddleProps) {
             <Checkbox mr="xl"
                       label={'Exact match'}
                       checked={exactMatch}
-                      onChange={(event) => setExactMatch(event.currentTarget.checked)} />
+                      disabled={typesData.typesData.length === 0}
+                      onChange={(event) => setExactMatch(event.currentTarget.checked)}/>
 
             <Checkbox mr="xl"
                       label={'Case sensitive'}
                       checked={caseSensitive}
-                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)} />
+                      disabled={typesData.typesData.length === 0}
+                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)}/>
           </div>
-          <div style={{width:'60%'}}>
-            <Button fullWidth onClick={() => submit()}>Search</Button>
+          <div style={{width: '60%'}}>
+            <Button fullWidth
+                    onClick={() => submit()}
+                    disabled={typesData.typesData.length === 0}>Search</Button>
           </div>
         </div>
         </Paper>
