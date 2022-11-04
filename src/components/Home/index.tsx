@@ -23,8 +23,11 @@ import {
   logout,
   goHome,
   fetchTypes,
+  isStringLonger,
+  isArrayEmpty,
   ABOUT_PATH,
-  ASSET_CATALOG_PATH
+  ASSET_CATALOG_PATH,
+  QUERY_MIN_LENGTH
 } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
@@ -85,13 +88,13 @@ interface HeaderMiddleProps {
 }
 
 export function EgeriaHome(props: HeaderMiddleProps) {
-  const { links } = props;
+  const {links} = props;
   const navigate = useNavigate();
 
-  const [q, setQ] = useState('');
-  const [types, setTypes]: [any, any] = useState([]);
+  const [q, setQ] = useState({value: '', isValid: false, isPristine: true});
+  const [types, setTypes]: [any, any] = useState({value: [], isValid: false, isPristine: true});
 
-  const { classes} = useStyles();
+  const {classes} = useStyles();
   const isLoggedIn = currentJwt();
 
   const [exactMatch, setExactMatch] = useState(false);
@@ -122,7 +125,9 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   ));
 
   const submit = () => {
-    navigate(`${ASSET_CATALOG_PATH}?q=${q}&types=${types.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+    if (q.isValid && types.isValid) {
+      navigate(`${ASSET_CATALOG_PATH}?q=${q.value}&types=${types.value.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
+    }
   }
 
   const handleKeyPress = (event: any) => {
@@ -160,27 +165,38 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       <Paper shadow="md" radius="lg">
         <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
           <TextInput
-            style={{width:'69%'}}
-            icon={<Search size={18} />}
-            radius="lg"
-            size="md"
-            value={q}
-            disabled={typesData.typesData.length === 0}
-            onKeyPress={handleKeyPress}
-            onChange={(event: any) => setQ(event.currentTarget.value)}
-            placeholder="Search terms"
-            rightSectionWidth={42}
+              style={{width: '69%'}}
+              icon={<Search size={18}/>}
+              radius="lg"
+              size="md"
+              value={q.value}
+              disabled={typesData.typesData.length === 0}
+              required
+              error={!q.isPristine && !q.isValid ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
+              onKeyPress={handleKeyPress}
+              onChange={(event: any) => setQ({
+                value: event.currentTarget.value,
+                isPristine: false,
+                isValid: isStringLonger(event.currentTarget.value, QUERY_MIN_LENGTH),
+              })}
+              placeholder="Search terms"
+              rightSectionWidth={42}
           />
 
           <MultiSelect
-            data={typesData.typesData}
-            disabled={typesData.typesData.length === 0}
-            value={types}
-            onChange={(value: any) => setTypes([...value])}
-            radius="lg"
-            size="md"
-            placeholder="Type"
-            style={{width:'30%'}}
+              data={typesData.typesData}
+              disabled={typesData.typesData.length === 0}
+              value={types.value}
+              error={!types.isPristine && !types.isValid ? 'At least one type has to be selected' : ''}
+              onChange={(value: any) => setTypes({
+                value: [...value],
+                isPristine: false,
+                isValid: !isArrayEmpty(value)
+              })}
+              radius="lg"
+              size="md"
+              placeholder="Type"
+              style={{width: '30%'}}
           />
         </div>
         <div style={{display: 'flex', padding: 20, paddingTop: 0, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -189,15 +205,15 @@ export function EgeriaHome(props: HeaderMiddleProps) {
                       label={'Exact match'}
                       checked={exactMatch}
                       disabled={typesData.typesData.length === 0}
-                      onChange={(event) => setExactMatch(event.currentTarget.checked)} />
+                      onChange={(event) => setExactMatch(event.currentTarget.checked)}/>
 
             <Checkbox mr="xl"
                       label={'Case sensitive'}
                       checked={caseSensitive}
                       disabled={typesData.typesData.length === 0}
-                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)} />
+                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)}/>
           </div>
-          <div style={{width:'60%'}}>
+          <div style={{width: '60%'}}>
             <Button fullWidth
                     onClick={() => submit()}
                     disabled={typesData.typesData.length === 0}>Search</Button>

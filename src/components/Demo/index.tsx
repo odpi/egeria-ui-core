@@ -8,27 +8,28 @@ import { EgeriaAbout } from '../About';
 import { EgeriaLogin } from '../Login';
 
 export function Demo() {
-  const menu = [
-    { customIcon: menuIcons.assets, label: 'Asset Lineage', href: '/lineage' },
-    { customIcon: menuIcons.glossary, label: 'Glossary View', href: '/glossary' },
-    { customIcon: menuIcons.typeExplorer, label: 'Type Explorer', href: '/type-explorer' },
-    { customIcon: menuIcons.assetCatalog, label: 'Asset Catalog', href: '/assets/catalog' },
-    { customIcon: menuIcons.repositoryExplorer, label: 'Repository Explorer', href: '/repository-explorer' }
-  ];
+    const menu = [
+        {customIcon: menuIcons.assets, label: 'Asset Lineage', href: '/lineage'},
+        {customIcon: menuIcons.glossary, label: 'Glossary View', href: '/glossary'},
+        {customIcon: menuIcons.typeExplorer, label: 'Type Explorer', href: '/type-explorer'},
+        {customIcon: menuIcons.assetCatalog, label: 'Asset Catalog', href: '/assets/catalog'},
+        {customIcon: menuIcons.repositoryExplorer, label: 'Repository Explorer', href: '/repository-explorer'}
+    ];
 
-  console.log(process.env.REACT_APP_API_URL);
+    console.log(process.env.REACT_APP_API_URL);
 
-  return <>
-    <div>
-      <Router basename={`/`}>
-        <Routes>
-          <Route path="/" element={<EgeriaApp single={true} main={<EgeriaHome links={links} />} />} />
-          <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={ goHome } /> } />} />
-          <Route path="/*" element={<EgeriaApp menu={menu} main={
-            <Routes>
-              <Route path={"/about"} element={<EgeriaAbout />} />
-            </Routes> } />} />
-        </Routes>
+    return <>
+        <div>
+            <Router basename={`/`}>
+                <Routes>
+                    <Route path="/" element={<EgeriaApp single={true} main={<EgeriaHome links={links}/>}/>}/>
+                    <Route path="/login"
+                           element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={goHome}/>}/>}/>
+                    <Route path="/*" element={<EgeriaApp menu={menu} main={
+                        <Routes>
+                            <Route path={"/about"} element={<EgeriaAbout/>}/>
+                        </Routes>}/>}/>
+                </Routes>
       </Router>
     </div>
   </>;
