@@ -91,8 +91,8 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   const {links} = props;
   const navigate = useNavigate();
 
-  const [q, setQ] = useState({value: '', isPristine: true});
-  const [types, setTypes]: [any, any] = useState({value: [], isPristine: true});
+  const [q, setQ] = useState({value: '', isValid: false, isPristine: true});
+  const [types, setTypes]: [any, any] = useState({value: [], isValid: false, isPristine: true});
 
   const {classes} = useStyles();
   const isLoggedIn = currentJwt();
@@ -125,7 +125,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   ));
 
   const submit = () => {
-    if (isStringLonger(q.value, QUERY_MIN_LENGTH) && !isArrayEmpty(types.value)) {
+    if (q.isValid && types.isValid) {
       navigate(`${ASSET_CATALOG_PATH}?q=${q.value}&types=${types.value.join(',')}&exactMatch=${exactMatch}&caseSensitive=${caseSensitive}`);
     }
   }
@@ -171,9 +171,13 @@ export function EgeriaHome(props: HeaderMiddleProps) {
               size="md"
               value={q.value}
               required
-              error={!q.isPristine && !isStringLonger(q.value, QUERY_MIN_LENGTH) ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
+              error={!q.isPristine && !q.isValid ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
               onKeyPress={handleKeyPress}
-              onChange={(event: any) => setQ({value: event.currentTarget.value, isPristine: false})}
+              onChange={(event: any) => setQ({
+                value: event.currentTarget.value,
+                isPristine: false,
+                isValid: isStringLonger(event.currentTarget.value, QUERY_MIN_LENGTH),
+              })}
               placeholder="Search terms"
               rightSectionWidth={42}
           />
@@ -181,8 +185,12 @@ export function EgeriaHome(props: HeaderMiddleProps) {
           <MultiSelect
               data={typesData.typesData}
               value={types.value}
-              error={!types.isPristine && isArrayEmpty(types.value) ? 'At least one type has to be selected' : ''}
-              onChange={(value: any) => setTypes({value: [...value], isPristine: false})}
+              error={!types.isPristine && !types.isValid ? 'At least one type has to be selected' : ''}
+              onChange={(value: any) => setTypes({
+                value: [...value],
+                isPristine: false,
+                isValid: !isArrayEmpty(value)
+              })}
               radius="lg"
               size="md"
               placeholder="Type"
