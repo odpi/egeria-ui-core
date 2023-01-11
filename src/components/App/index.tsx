@@ -33,7 +33,7 @@ export function EgeriaApp(props: React.PropsWithChildren<Props>) {
     return function cleanup() {
       document.removeEventListener('EGERIA_API_ERROR', listenForAPIErrors);
     };
-  });
+  }, []);
 
   return <>
     <NotificationsProvider>
