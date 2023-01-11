@@ -19,7 +19,7 @@ const listenForAPIErrors = (e: any) => {
     autoClose: 10000,
     color: 'red',
     title: `${e.detail.status}: ${e.detail.statusText}` || 'Server Error',
-    message: `Something went wrong, try reloading the page.`,
+    message: e.detail && e.detail.message ? `${e.detail.message}` : `Something went wrong, try reloading the page.`,
   });
 };
 
