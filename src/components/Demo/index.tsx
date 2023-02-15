@@ -6,6 +6,7 @@ import './index.scss';
 import { EgeriaHome, links } from '../Home';
 import { EgeriaAbout } from '../About';
 import { EgeriaLogin } from '../Login';
+import { RequirePermissions } from '../RequirePermissions';
 
 export function Demo() {
     const menu = [
@@ -27,7 +28,8 @@ export function Demo() {
                            element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={goHome}/>}/>}/>
                     <Route path="/*" element={<EgeriaApp menu={menu} main={
                         <Routes>
-                            <Route path={"/about"} element={<EgeriaAbout/>}/>
+                            <Route path={"/about"} element={<RequirePermissions component='about'><EgeriaAbout/></RequirePermissions>}/>
+                            <Route path={"/assets/catalog"} element={<RequirePermissions component='asset-catalog'/>}/>
                         </Routes>}/>}/>
                 </Routes>
       </Router>

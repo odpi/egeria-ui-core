@@ -1,3 +1,4 @@
+import { hasComponent } from '@lfai/egeria-js-commons';
 import {
   Center,
   Group,
@@ -43,7 +44,7 @@ export function EgeriaHeader() {
         </Group>
 
         <Center style={{ width: '100%' }}>
-          <MainSearch />
+          { hasComponent('asset-catalog') && <MainSearch /> }
         </Center>
       </div>
     </Header>
