@@ -28,7 +28,8 @@ import {
   ABOUT_PATH,
   ASSET_CATALOG_PATH,
   QUERY_MIN_LENGTH,
-  hasComponent
+  hasComponent,
+  VISIBLE_COMPONENTS
 } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
@@ -72,14 +73,14 @@ export const links = [
     "link": "/",
     "label": "Home"
   },
-  ...(hasComponent('asset-catalog') ? [{
+  ...(hasComponent(VISIBLE_COMPONENTS.ASSET_CATALOG) ? [{
     "link": ASSET_CATALOG_PATH,
     "label": "Catalog"
   }] : []),
-  ...(hasComponent('about') ? [{
+  [{
     "link": ABOUT_PATH,
     "label": "About"
-  }] : [])
+  }]
 ];
 
 const emptyTypesData: Array<any> = [];

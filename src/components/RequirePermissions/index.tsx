@@ -3,8 +3,12 @@ import { AccessDenied } from '../UserPermissions/AccessDenied';
 
 export function RequirePermissions(props:any) {
   if (hasComponent(props.component)) {
-    return (<>{props.children}</>);
+    return (<>{props.element}</>);
   } else {
-    return (<AccessDenied component={props.component}/>);
+    if (props.showAccessDenied) {
+      return (<AccessDenied component={props.component}/>);
+    } else {
+      return (<></>);
+    }
   }
 }
