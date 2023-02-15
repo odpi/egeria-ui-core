@@ -77,10 +77,10 @@ export const links = [
     "link": ASSET_CATALOG_PATH,
     "label": "Catalog"
   }] : []),
-  [{
+  {
     "link": ABOUT_PATH,
     "label": "About"
-  }]
+  }
 ];
 
 const emptyTypesData: Array<any> = [];
