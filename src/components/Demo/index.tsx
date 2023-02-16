@@ -6,7 +6,6 @@ import './index.scss';
 import { EgeriaHome, links } from '../Home';
 import { EgeriaAbout } from '../About';
 import { EgeriaLogin } from '../Login';
-import { RequirePermissions } from '../RequirePermissions';
 
 export function Demo() {
   const menu = [

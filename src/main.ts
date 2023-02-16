@@ -4,6 +4,7 @@ import {
   EgeriaHome,
   EgeriaLogin,
   RequireAuth,
+  RequirePermissions,
   links
 } from './components';
 
@@ -15,5 +16,6 @@ export {
   EgeriaHome,
   EgeriaLogin,
   RequireAuth,
+  RequirePermissions,
   links
 }
