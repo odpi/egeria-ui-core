@@ -1,8 +1,9 @@
+import { EgeriaAbout } from './About';
+import { EgeriaApp } from './App';
+import { EgeriaHome, links } from './Home';
 import { EgeriaLogin } from './Login';
 import { RequireAuth } from './RequireAuth';
-import { EgeriaAbout } from './About';
-import { EgeriaHome, links } from './Home';
-import { EgeriaApp } from './App';
+import { RequirePermissions } from './RequirePermissions';
 
 export {
   EgeriaAbout,
@@ -10,5 +11,6 @@ export {
   EgeriaHome,
   EgeriaLogin,
   RequireAuth,
+  RequirePermissions,
   links
 }
