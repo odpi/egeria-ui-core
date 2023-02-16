@@ -31,6 +31,7 @@ import {
   hasComponent,
   VISIBLE_COMPONENTS
 } from '@lfai/egeria-js-commons';
+import { RequirePermissions } from '../RequirePermissions';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -163,7 +164,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       <NavLink to={'/'}><img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
     </Container>
 
-    { hasComponent('asset-catalog') &&
+    <RequirePermissions component={VISIBLE_COMPONENTS.ASSET_CATALOG} element={
       <Container>
         <Paper shadow="md" radius="lg">
           <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
@@ -224,7 +225,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
           </div>
           </Paper>
       </Container> }
-
+    />
     <LoadingOverlay visible={typesData.isLoading} />
   </>);
 }
