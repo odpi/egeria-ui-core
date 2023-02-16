@@ -6,7 +6,7 @@ import {
   UserCircle
 } from 'tabler-icons-react';
 import { NavLink } from 'react-router-dom';
-import { logout } from '@lfai/egeria-js-commons';
+import { hasComponent, logout } from '@lfai/egeria-js-commons';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -66,11 +66,12 @@ export function EgeriaNavbar(props: Props) {
   const { menu } = props;
 
   const links = menu.map((link: any, index: any) => (
-    <NavbarLink
-      {...link}
-      href={link.href}
-      key={link.label}
-    />
+    ((link.component && hasComponent(link.component)) || (!link.component)) &&
+      <NavbarLink
+        {...link}
+        href={link.href}
+        key={link.label}
+      />
   ));
 
   const handleLogout = () => {

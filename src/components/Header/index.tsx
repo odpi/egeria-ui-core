@@ -1,3 +1,4 @@
+import { hasComponent, VISIBLE_COMPONENTS } from '@lfai/egeria-js-commons';
 import {
   Center,
   Group,
@@ -7,6 +8,7 @@ import {
 import { NavLink } from 'react-router-dom';
 
 import { MainSearch } from '../MainSearch';
+import { RequirePermissions } from '../RequirePermissions';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -42,9 +44,9 @@ export function EgeriaHeader() {
           <NavLink to={'/'} style={{height:50}}><img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:50}} /></NavLink>
         </Group>
 
-        <Center style={{ width: '100%' }}>
+        <RequirePermissions component={VISIBLE_COMPONENTS.ASSET_CATALOG} showAccessDenied={false} element={<Center style={{ width: '100%' }}>
           <MainSearch />
-        </Center>
+        </Center> } />
       </div>
     </Header>
   );

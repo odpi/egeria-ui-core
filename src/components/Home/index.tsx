@@ -27,8 +27,11 @@ import {
   isArrayEmpty,
   ABOUT_PATH,
   ASSET_CATALOG_PATH,
-  QUERY_MIN_LENGTH
+  QUERY_MIN_LENGTH,
+  hasComponent,
+  VISIBLE_COMPONENTS
 } from '@lfai/egeria-js-commons';
+import { RequirePermissions } from '../RequirePermissions';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -71,10 +74,10 @@ export const links = [
     "link": "/",
     "label": "Home"
   },
-  {
+  ...(hasComponent(VISIBLE_COMPONENTS.ASSET_CATALOG) ? [{
     "link": ASSET_CATALOG_PATH,
     "label": "Catalog"
-  },
+  }] : []),
   {
     "link": ABOUT_PATH,
     "label": "About"
@@ -161,67 +164,68 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       <NavLink to={'/'}><img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
     </Container>
 
-    <Container>
-      <Paper shadow="md" radius="lg">
-        <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
-          <TextInput
-              style={{width: '69%'}}
-              icon={<Search size={18}/>}
-              radius="lg"
-              size="md"
-              value={q.value}
-              disabled={typesData.typesData.length === 0}
-              required
-              error={!q.isPristine && !q.isValid ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
-              onKeyPress={handleKeyPress}
-              onChange={(event: any) => setQ({
-                value: event.currentTarget.value,
-                isPristine: false,
-                isValid: isStringLonger(event.currentTarget.value, QUERY_MIN_LENGTH),
-              })}
-              placeholder="Search terms"
-              rightSectionWidth={42}
-          />
+    <RequirePermissions component={VISIBLE_COMPONENTS.ASSET_CATALOG} showAccessDenied={false} element={
+      <Container>
+        <Paper shadow="md" radius="lg">
+          <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>
+            <TextInput
+                style={{width: '69%'}}
+                icon={<Search size={18}/>}
+                radius="lg"
+                size="md"
+                value={q.value}
+                disabled={typesData.typesData.length === 0}
+                required
+                error={!q.isPristine && !q.isValid ? 'Query must be at least ' + QUERY_MIN_LENGTH + ' characters' : ''}
+                onKeyPress={handleKeyPress}
+                onChange={(event: any) => setQ({
+                  value: event.currentTarget.value,
+                  isPristine: false,
+                  isValid: isStringLonger(event.currentTarget.value, QUERY_MIN_LENGTH),
+                })}
+                placeholder="Search terms"
+                rightSectionWidth={42}
+            />
 
-          <MultiSelect
-              data={typesData.typesData}
-              disabled={typesData.typesData.length === 0}
-              value={types.value}
-              error={!types.isPristine && !types.isValid ? 'At least one type has to be selected' : ''}
-              onChange={(value: any) => setTypes({
-                value: [...value],
-                isPristine: false,
-                isValid: !isArrayEmpty(value)
-              })}
-              radius="lg"
-              size="md"
-              placeholder="Type"
-              style={{width: '30%'}}
-          />
-        </div>
-        <div style={{display: 'flex', padding: 20, paddingTop: 0, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div style={{width: '40%', display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-            <Checkbox mr="xl"
-                      label={'Exact match'}
-                      checked={exactMatch}
-                      disabled={typesData.typesData.length === 0}
-                      onChange={(event) => setExactMatch(event.currentTarget.checked)}/>
-
-            <Checkbox mr="xl"
-                      label={'Case sensitive'}
-                      checked={caseSensitive}
-                      disabled={typesData.typesData.length === 0}
-                      onChange={(event) => setCaseSensitive(event.currentTarget.checked)}/>
+            <MultiSelect
+                data={typesData.typesData}
+                disabled={typesData.typesData.length === 0}
+                value={types.value}
+                error={!types.isPristine && !types.isValid ? 'At least one type has to be selected' : ''}
+                onChange={(value: any) => setTypes({
+                  value: [...value],
+                  isPristine: false,
+                  isValid: !isArrayEmpty(value)
+                })}
+                radius="lg"
+                size="md"
+                placeholder="Type"
+                style={{width: '30%'}}
+            />
           </div>
-          <div style={{width: '60%'}}>
-            <Button fullWidth
-                    onClick={() => submit()}
-                    disabled={typesData.typesData.length === 0}>Search</Button>
-          </div>
-        </div>
-        </Paper>
-    </Container>
+          <div style={{display: 'flex', padding: 20, paddingTop: 0, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
+            <div style={{width: '40%', display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              <Checkbox mr="xl"
+                        label={'Exact match'}
+                        checked={exactMatch}
+                        disabled={typesData.typesData.length === 0}
+                        onChange={(event) => setExactMatch(event.currentTarget.checked)}/>
 
+              <Checkbox mr="xl"
+                        label={'Case sensitive'}
+                        checked={caseSensitive}
+                        disabled={typesData.typesData.length === 0}
+                        onChange={(event) => setCaseSensitive(event.currentTarget.checked)}/>
+            </div>
+            <div style={{width: '60%'}}>
+              <Button fullWidth
+                      onClick={() => submit()}
+                      disabled={typesData.typesData.length === 0}>Search</Button>
+            </div>
+          </div>
+          </Paper>
+      </Container> }
+    />
     <LoadingOverlay visible={typesData.isLoading} />
   </>);
 }
