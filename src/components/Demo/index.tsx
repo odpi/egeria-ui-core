@@ -27,7 +27,7 @@ export function Demo() {
           <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={goHome}/>}/>}/>
           <Route path="/*" element={<EgeriaApp menu={menu} main={
             <Routes>
-              <Route path={"/about"} element={<RequirePermissions component='about' element={<EgeriaAbout/>}/>}/>
+              <Route path={"/about"} element={<EgeriaAbout/>}/>
             </Routes>}/>
           }/>
         </Routes>

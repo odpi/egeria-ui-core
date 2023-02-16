@@ -164,7 +164,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
       <NavLink to={'/'}><img src="/egeria-logo.svg" alt="Egeria" title="Egeria" style={{height:150}}/></NavLink>
     </Container>
 
-    <RequirePermissions component={VISIBLE_COMPONENTS.ASSET_CATALOG} element={
+    <RequirePermissions component={VISIBLE_COMPONENTS.ASSET_CATALOG} showAccessDenied={false} element={
       <Container>
         <Paper shadow="md" radius="lg">
           <div style={{display: 'flex', padding: 20, flexWrap: 'wrap', justifyContent: 'space-between'}}>

@@ -66,7 +66,7 @@ export function EgeriaNavbar(props: Props) {
   const { menu } = props;
 
   const links = menu.map((link: any, index: any) => (
-    !link.component || hasComponent(link.component) &&
+    ((link.component && hasComponent(link.component)) || (!link.component)) &&
       <NavbarLink
         {...link}
         href={link.href}
