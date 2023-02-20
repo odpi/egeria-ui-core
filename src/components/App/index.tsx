@@ -7,7 +7,6 @@ import {useEffect} from 'react';
 
 import {EgeriaHeader} from '../Header';
 import {EgeriaNavbar} from '../NavbarMinimal';
-import { RequirePermissions } from '../RequirePermissions';
 
 interface Props {
   main?: React.ReactNode;

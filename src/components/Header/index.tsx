@@ -1,4 +1,4 @@
-import { hasComponent, VISIBLE_COMPONENTS } from '@lfai/egeria-js-commons';
+import { VISIBLE_COMPONENTS } from '@lfai/egeria-js-commons';
 import {
   Center,
   Group,
