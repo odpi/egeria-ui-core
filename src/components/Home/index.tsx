@@ -78,10 +78,10 @@ export const links = [
     "link": ASSET_CATALOG_PATH,
     "label": "Catalog"
   }] : []),
-  {
+  ...(hasComponent(VISIBLE_COMPONENTS.ABOUT) ? [{
     "link": ABOUT_PATH,
     "label": "About"
-  }
+  }] : [])
 ];
 
 const emptyTypesData: Array<any> = [];
