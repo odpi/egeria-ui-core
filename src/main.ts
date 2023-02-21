@@ -3,6 +3,7 @@ import {
   EgeriaApp,
   EgeriaHome,
   EgeriaLogin,
+  EgeriaPageNotFound,
   RequireAuth,
   RequirePermissions,
   links
@@ -15,6 +16,7 @@ export {
   EgeriaApp,
   EgeriaHome,
   EgeriaLogin,
+  EgeriaPageNotFound,
   RequireAuth,
   RequirePermissions,
   links
