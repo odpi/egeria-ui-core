@@ -24,6 +24,8 @@ export function Demo() {
     <div>
       <Router basename={`/`}>
         <Routes>
+          <Route path="/assets/catalog" element={<EgeriaApp main={<>Test</>}/>}/>
+
           <Route path="/" element={<EgeriaApp single={true} main={<EgeriaHome links={links}/>}/>}/>
           <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={goHome}/>}/>}/>
           <Route path="/about" element={<EgeriaApp menu={menu} main={
