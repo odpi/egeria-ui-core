@@ -19,7 +19,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import {
-  currentJwt,
+  token,
   logout,
   goHome,
   fetchTypes,
@@ -96,7 +96,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   const [types, setTypes]: [any, any] = useState({value: [], isValid: false, isPristine: true});
 
   const {classes} = useStyles();
-  const isLoggedIn = currentJwt();
+  const isLoggedIn = token.getValue();
 
   const [exactMatch, setExactMatch] = useState(false);
   const [caseSensitive, setCaseSensitive] = useState(false);
