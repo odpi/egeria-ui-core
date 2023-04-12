@@ -1,9 +1,5 @@
-import {
-  currentJwt,
-  parseJwt
-} from '@lfai/egeria-js-commons';
-
-import React from "react";
+import React from 'react';
+import { token } from '@lfai/egeria-js-commons';
 
 interface Props {
 }
@@ -30,11 +26,11 @@ class UserInfo extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const _currentJwt = parseJwt(currentJwt());
-    const userData = JSON.parse(_currentJwt.sub);
+    const _token = token.decodedObject();
+    const username = _token?.sub;
 
-    this.setState({
-      displayName: userData.displayName
+    this.setState<any>({
+      displayName: username
     });
   }
 
