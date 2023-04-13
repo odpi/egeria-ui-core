@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { EgeriaApp } from '../App';
-import { goHome, menuIcons, VISIBLE_COMPONENTS } from '@lfai/egeria-js-commons';
+import { eNavigateTo, menuIcons, VISIBLE_COMPONENTS } from '@lfai/egeria-js-commons';
 
 import './index.scss';
 import { EgeriaHome, links } from '../Home';
@@ -27,7 +27,7 @@ export function Demo() {
           <Route path="/assets/catalog" element={<EgeriaApp main={<>Test</>}/>}/>
 
           <Route path="/" element={<EgeriaApp single={true} main={<EgeriaHome links={links}/>}/>}/>
-          <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={goHome}/>}/>}/>
+          <Route path="/login" element={<EgeriaApp single={true} main={<EgeriaLogin loginCallback={() => eNavigateTo('/')}/>}/>}/>
           <Route path="/about" element={<EgeriaApp menu={menu} main={
             <RequirePermissions showAccessDenied={true} component={VISIBLE_COMPONENTS.ABOUT} element={<EgeriaAbout/>}/>}/>
           }/>

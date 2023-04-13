@@ -6,7 +6,8 @@ import {
   UserCircle
 } from 'tabler-icons-react';
 import { NavLink } from 'react-router-dom';
-import { hasComponent, logout } from '@lfai/egeria-js-commons';
+import { VISIBLE_COMPONENTS, logout, token } from '@lfai/egeria-js-commons';
+import { RequirePermissions } from '../RequirePermissions';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -64,14 +65,12 @@ interface Props {
 
 export function EgeriaNavbar(props: Props) {
   const { menu } = props;
+  const isLoggedIn = token.getValue();
 
   const links = menu.map((link: any, index: any) => (
-    ((link.component && hasComponent(link.component)) || (!link.component)) &&
-      <NavbarLink
-        {...link}
-        href={link.href}
-        key={link.label}
-      />
+    <RequirePermissions key={index} component={link.component} showAccessDenied={false} element={
+      <NavbarLink {...link} href={link.href} />
+    } />
   ));
 
   const handleLogout = () => {
@@ -87,15 +86,19 @@ export function EgeriaNavbar(props: Props) {
       </Navbar.Section>
 
       <Navbar.Section>
-        <Group>
+        { isLoggedIn && <Group>
           <NavbarLink icon={UserCircle} label="Profile" href="/profile" />
-        </Group>
-        <Group>
-          <NavbarLink icon={InfoCircle} label="About" href="/about" />
-        </Group>
-        <Group>
+        </Group> }
+
+        <RequirePermissions component={VISIBLE_COMPONENTS.ABOUT} showAccessDenied={false} element={
+          <Group>
+            <NavbarLink icon={InfoCircle} label="About" href="/about" />
+          </Group>
+        } />
+
+        { isLoggedIn && <Group>
           <NavbarLink icon={Logout} label="Logout" onClick={() => handleLogout()}/>
-        </Group>
+        </Group> }
       </Navbar.Section>
     </Navbar>
   );

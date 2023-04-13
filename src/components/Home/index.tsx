@@ -21,15 +21,14 @@ import { useEffect, useState } from 'react';
 import {
   token,
   logout,
-  goHome,
   fetchTypes,
   isStringLonger,
   isArrayEmpty,
   ABOUT_PATH,
   ASSET_CATALOG_PATH,
   QUERY_MIN_LENGTH,
-  hasComponent,
-  VISIBLE_COMPONENTS
+  VISIBLE_COMPONENTS,
+  eNavigateTo
 } from '@lfai/egeria-js-commons';
 import { RequirePermissions } from '../RequirePermissions';
 
@@ -72,24 +71,26 @@ export const links = [
     "link": "/",
     "label": "Home"
   },
-  ...(hasComponent(VISIBLE_COMPONENTS.ASSET_CATALOG) ? [{
+  {
     "link": ASSET_CATALOG_PATH,
-    "label": "Catalog"
-  }] : []),
-  ...(hasComponent(VISIBLE_COMPONENTS.ABOUT) ? [{
+    "label": "Catalog",
+    "component": VISIBLE_COMPONENTS.ASSET_CATALOG
+  },
+  {
     "link": ABOUT_PATH,
-    "label": "About"
-  }] : [])
+    "label": "About",
+    "component": VISIBLE_COMPONENTS.ABOUT
+  }
 ];
 
 const emptyTypesData: Array<any> = [];
 
 interface HeaderMiddleProps {
-  links: { link: string; label: string }[];
+  links: { link: string; label: string, component?: string }[];
 }
 
 export function EgeriaHome(props: HeaderMiddleProps) {
-  const {links} = props;
+  const { links } = props;
   const navigate = useNavigate();
 
   const [q, setQ] = useState({value: '', isValid: false, isPristine: true});
@@ -122,7 +123,9 @@ export function EgeriaHome(props: HeaderMiddleProps) {
   }, []);
 
   const items = links.map((link, index) => (
-    <NavLink className={classes.link} to={link.link} key={index}>{link.label}</NavLink>
+    <RequirePermissions key={index} component={link.component} showAccessDenied={false} element={
+      <NavLink className={classes.link} to={link.link}>{link.label}</NavLink>
+    } />
   ));
 
   const submit = () => {
@@ -145,7 +148,7 @@ export function EgeriaHome(props: HeaderMiddleProps) {
         </Group>
 
         <Group spacing={0} position="right" noWrap>
-          { isLoggedIn && <Button variant="light" onClick={() => { logout(goHome); }}>
+          { isLoggedIn && <Button variant="light" onClick={() => { logout(() => eNavigateTo('/')); }}>
             Logout
           </Button> }
 

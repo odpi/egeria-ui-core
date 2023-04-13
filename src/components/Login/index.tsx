@@ -58,6 +58,8 @@ export function EgeriaLogin(props: Props) {
           setErrors(errors);
           setIsLoading(false);
         } else {
+          console.log('loginCallback');
+
           loginCallback();
         }
       });
