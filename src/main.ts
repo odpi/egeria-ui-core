@@ -4,6 +4,7 @@ import {
   EgeriaHome,
   EgeriaLogin,
   EgeriaPageNotFound,
+  EgeriaServerUnavailable,
   RequireAuth,
   RequirePermissions,
   links
@@ -17,6 +18,7 @@ export {
   EgeriaHome,
   EgeriaLogin,
   EgeriaPageNotFound,
+  EgeriaServerUnavailable,
   RequireAuth,
   RequirePermissions,
   links
