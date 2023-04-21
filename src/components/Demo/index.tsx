@@ -8,6 +8,7 @@ import { EgeriaAbout } from '../About';
 import { EgeriaLogin } from '../Login';
 import { RequirePermissions } from '../RequirePermissions';
 import { EgeriaPageNotFound } from '../EgeriaPageNotFound';
+import { EgeriaServerUnavailable } from '../EgeriaServerUnavailable';
 
 export function Demo() {
   const menu = [
@@ -31,6 +32,10 @@ export function Demo() {
           <Route path="/about" element={<EgeriaApp menu={menu} main={
             <RequirePermissions showAccessDenied={true} component={VISIBLE_COMPONENTS.ABOUT} element={<EgeriaAbout/>}/>}/>
           }/>
+          <Route path="/server-unavailable" element={<EgeriaApp single={true} main={
+            <EgeriaServerUnavailable/>
+          } /> } />
+
           <Route path="/*" element={<EgeriaPageNotFound/> } />
         </Routes>
     </Router>
