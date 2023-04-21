@@ -7,8 +7,9 @@ interface Props {
 }
 
 interface State {
+  loaded: boolean,
+  error: boolean,
   data: {
-    loaded: boolean,
     name: String,
     version: String,
     commitId: String,
@@ -29,8 +30,9 @@ class EgeriaAbout extends React.Component<Props, State> {
     super(props);
 
     this.state = {
+      loaded: false,
+      error: false,
       data: {
-        loaded: false,
         name: '',
         version: '',
         commitId: '',
@@ -40,40 +42,62 @@ class EgeriaAbout extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    fetch(`${apiUrl()}/about.json`)
-      .then(data => {
-        return data.json()
+    fetch(`${apiUrl() || ''}/about.json`)
+      .then((response: any) => {
+        if(!response.ok) {
+          this.setState({
+            loaded: true,
+            error: true
+          });
+
+          const event = new CustomEvent('EGERIA_API_ERROR', {
+            'detail': {
+              status: response.status,
+              statusText: response.statusText
+            }
+          });
+
+          document.dispatchEvent(event);
+        }
+
+        return response;
+      })
+      .then((data: any) => {
+        return data.json();
       })
       .then(data => {
         this.setState({
+          loaded: true,
           data: {
-            ...data,
-            loaded: true
+            ...data
           }
         });
+      })
+      .catch((error: any) => {
+
       });
   }
 
   render() {
-    const { data }: any = this.state;
+    const { loaded, error, data }: any = this.state;
 
     return (<>
       <div style={{ height:'100%', position: 'relative' }}>
-        <LoadingOverlay visible={!data.loaded} />
+        <LoadingOverlay visible={!loaded} />
 
-        <Paper shadow="xs" p="md" style={{height: '100%'}}>
+        { !error && loaded && <Paper shadow="xs" p="md" style={{height: '100%'}}>
           <Text size="xl">About</Text>
-          <Accordion>
-            { Object.keys(data).filter(k => k !== 'loaded').map((k, index) => {
-              return (
-                <Accordion.Item value={k} key={index}>
-                  <Accordion.Control>{ capitalize(k) }</Accordion.Control>
-                  <Accordion.Panel>{ capitalize(data[k]) }</Accordion.Panel>
-                </Accordion.Item>
-              );
-            }) }
-          </Accordion>
-        </Paper>
+            <Accordion>
+              { Object.keys(data).filter(k => k !== 'loaded').map((k, index) => {
+                return (
+                  <Accordion.Item value={k} key={index}>
+                    <Accordion.Control>{ capitalize(k) }</Accordion.Control>
+                    <Accordion.Panel>{ capitalize(data[k]) }</Accordion.Panel>
+                  </Accordion.Item>
+                );
+              }) }
+            </Accordion>
+        </Paper> }
       </div>
     </>);
   }
