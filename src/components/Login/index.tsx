@@ -40,7 +40,7 @@ export function EgeriaLogin(props: Props) {
       setIsLoading(true);
 
       login(username.value, password.value).then((response: any) => {
-        let errors = [];
+        const errors = [];
 
         if (!response.ok) {
           switch (response.status){
