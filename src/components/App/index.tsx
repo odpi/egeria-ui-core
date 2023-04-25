@@ -7,7 +7,7 @@ import { EgeriaNavbar } from '../NavbarMinimal';
 
 interface Props {
   main?: React.ReactNode;
-  menu?: Array<Object>;
+  menu?: Array<object>;
   single?: boolean;
 }
 

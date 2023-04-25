@@ -10,10 +10,10 @@ interface State {
   loaded: boolean,
   error: boolean,
   data: {
-    name: String,
-    version: String,
-    commitId: String,
-    buildTime: String
+    name: string,
+    version: string,
+    commitId: string,
+    buildTime: string
   }
 }
 
@@ -74,7 +74,7 @@ class EgeriaAbout extends React.Component<Props, State> {
         });
       })
       .catch((error: any) => {
-
+        console.log(error);
       });
   }
 
