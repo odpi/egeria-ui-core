@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, LoadingOverlay, Paper, Text } from '@mantine/core';
+import { LoadingOverlay, Paper, Table, Title } from '@mantine/core';
 import { capitalize } from "@lfai/egeria-js-commons";
 import { apiUrl } from '@lfai/egeria-js-commons';
 
@@ -80,24 +80,28 @@ class EgeriaAbout extends React.Component<Props, State> {
 
   render() {
     const { loaded, error, data }: any = this.state;
-
     return (<>
       <div style={{ height:'100%', position: 'relative' }}>
         <LoadingOverlay visible={!loaded} />
 
-        { !error && loaded && <Paper shadow="xs" p="md" style={{height: '100%'}}>
-          <Text size="xl">About</Text>
-            <Accordion>
+        { !error && loaded && <>
+          <Paper radius='md' p='lg' withBorder  mb='md'>
+            <Title order={2}>About</Title>
+          </Paper>
+          <Paper radius='md' shadow="xs" p="lg" withBorder style={{height: '100%'}}>
+            <Table striped>
+              <tbody>
               { Object.keys(data).filter(k => k !== 'loaded').map((k, index) => {
                 return (
-                  <Accordion.Item value={k} key={index}>
-                    <Accordion.Control>{ capitalize(k) }</Accordion.Control>
-                    <Accordion.Panel>{ capitalize(data[k]) }</Accordion.Panel>
-                  </Accordion.Item>
+                  <tr key={index}>
+                    <td style={{width: '20%'}}><strong>{ capitalize(k) }</strong></td>
+                    <td>{ capitalize(data[k]) }</td>
+                  </tr>
                 );
               }) }
-            </Accordion>
-        </Paper> }
+              </tbody>
+            </Table>
+          </Paper> </>}
       </div>
     </>);
   }
